@@ -325,6 +325,7 @@ export interface LearningPathItem {
 export interface UploadedMaterial {
   id: string;
   name: string;
+  title?: string;
   type: 'PDF' | 'DOCX' | 'PPTX' | 'TXT' | 'PAPER';
   size: string;
   pages?: number;

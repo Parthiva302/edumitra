@@ -6,14 +6,16 @@ import httpx
 from dotenv import load_dotenv
 from supabase import create_client as create_supa_client
 
-BASE_URL = "http://127.0.0.1:8000"
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from app.main import app
 
 async def main():
     print("==================================================")
     print("   EDUMITRA FULL PLATFORM END-TO-END VERIFICATION")
     print("==================================================")
     
-    async with httpx.AsyncClient(base_url=BASE_URL, timeout=90.0) as client:
+    transport = httpx.ASGITransport(app=app)
+    async with httpx.AsyncClient(transport=transport, base_url="http://testserver", timeout=120.0) as client:
         # 1. Health Check
         print("\n1. Testing Health Endpoint...")
         res = await client.get("/health")

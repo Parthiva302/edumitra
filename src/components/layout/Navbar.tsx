@@ -14,7 +14,8 @@ import {
   User,
   Sliders,
   LogOut,
-  ChevronDown
+  ChevronDown,
+  Sparkles
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -24,6 +25,7 @@ interface NavbarProps {
   onStartNewLesson: () => void;
   onShowToast?: (message: string, type?: 'success' | 'info' | 'warning') => void;
   onLogout?: () => void;
+  onLaunchJudgeDemo?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -32,7 +34,8 @@ export const Navbar: React.FC<NavbarProps> = ({
   student,
   onStartNewLesson,
   onShowToast,
-  onLogout
+  onLogout,
+  onLaunchJudgeDemo
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
@@ -147,6 +150,19 @@ export const Navbar: React.FC<NavbarProps> = ({
             <Flame className="w-3.5 h-3.5 text-[#C58B3A] fill-[#C58B3A]" />
             <span>7-day streak</span>
           </div>
+
+          {/* Judge Demo Quick Launch CTA */}
+          {onLaunchJudgeDemo && (
+            <button
+              id="navbar-judge-demo-btn"
+              onClick={onLaunchJudgeDemo}
+              className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-semibold text-xs border border-indigo-200 transition-all duration-150 cursor-pointer shadow-xs"
+              title="Launch complete 9-step hackathon judge evaluation demo"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-indigo-600 animate-pulse" />
+              <span>Judge Demo</span>
+            </button>
+          )}
 
           {/* New Lesson Primary CTA */}
           <button

@@ -6,10 +6,10 @@ from app.schemas.student import StudentProfileCreate, StudentLogin, StudentProfi
 from app.database.supabase import get_supabase, get_auth_client, get_user_profile, upsert_user_profile
 from app.api.auth_deps import get_current_user_id
 
-router = APIRouter(prefix="/api/auth", tags=["auth"])
-logger = logging.getLogger("edumitra.api.auth")
+router = APIRouter(tags=["auth_and_profile"])
+logger = logging.getLogger("edumitra.api.students")
 
-@router.post("/register")
+@router.post("/api/auth/register")
 def register_student(payload: StudentProfileCreate):
     """Register a new student account using Supabase Auth and create their profile"""
     try:
@@ -40,7 +40,9 @@ def register_student(payload: StudentProfileCreate):
             "preferred_language": "English",
             "education_level": "Beginner",
             "learning_goal": "understand_concept",
-            "preferred_teaching_style": "simple_visual"
+            "learning_objective": "understand_concept",
+            "preferred_teaching_style": "simple_visual",
+            "teaching_style": "simple_visual"
         }
         upsert_user_profile(profile_data)
 
@@ -83,7 +85,7 @@ def register_student(payload: StudentProfileCreate):
             raise HTTPException(status_code=400, detail="An account with this email already exists. Please log in.")
         raise HTTPException(status_code=400, detail=error_msg)
 
-@router.post("/login")
+@router.post("/api/auth/login")
 def login_student(payload: StudentLogin):
     """Authenticate student credentials using Supabase Auth"""
     try:
@@ -128,7 +130,7 @@ def login_student(payload: StudentLogin):
         logger.error(f"Login error: {e}")
         raise HTTPException(status_code=401, detail="Incorrect email or password.")
 
-@router.post("/logout")
+@router.post("/api/auth/logout")
 def logout_student(user_id: str = Depends(get_current_user_id)):
     """Sign out student and invalidate session"""
     try:
@@ -138,15 +140,28 @@ def logout_student(user_id: str = Depends(get_current_user_id)):
     except Exception:
         return {"success": True}
 
-@router.get("/profile")
+# GET /api/profile and GET /api/auth/profile
+@router.get("/api/profile")
+@router.get("/api/auth/profile")
 def get_current_profile(user_id: str = Depends(get_current_user_id)):
     """Fetch profile of authenticated student"""
     profile = get_user_profile(user_id)
     if not profile:
-        raise HTTPException(status_code=404, detail="Profile not found.")
+        return {
+            "id": user_id,
+            "full_name": "Student",
+            "education_level": "Beginner",
+            "existing_knowledge": "Beginner",
+            "learning_objective": "understand_concept",
+            "preferred_language": "English",
+            "teaching_style": "simple_visual",
+            "preferred_depth": "normal"
+        }
     return profile
 
-@router.put("/profile")
+# PUT /api/profile and PUT /api/auth/profile
+@router.put("/api/profile")
+@router.put("/api/auth/profile")
 def update_profile(payload: StudentProfileUpdate, user_id: str = Depends(get_current_user_id)):
     """Update profile settings for student"""
     existing = get_user_profile(user_id) or {"id": user_id}

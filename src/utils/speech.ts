@@ -6,6 +6,7 @@ class TeacherSpeechService {
   private isSpeakingState: boolean = false;
   private onBoundaryCallback: ((word: string, charIndex: number) => void) | null = null;
   private onStateChangeCallback: ((isSpeaking: boolean) => void) | null = null;
+  private boundaryListeners: Set<(word: string, charIndex: number) => void> = new Set();
 
   constructor() {
     if (typeof window !== 'undefined' && 'speechSynthesis' in window) {

@@ -6,12 +6,14 @@ interface LandingNavbarProps {
   onNavigateLogin: () => void;
   onNavigateSignUp: () => void;
   onScrollToSection: (sectionId: string) => void;
+  onLaunchJudgeDemo?: () => void;
 }
 
 export const LandingNavbar: React.FC<LandingNavbarProps> = ({
   onNavigateLogin,
   onNavigateSignUp,
   onScrollToSection,
+  onLaunchJudgeDemo
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string>('hero');
@@ -121,8 +123,20 @@ export const LandingNavbar: React.FC<LandingNavbarProps> = ({
           </button>
         </nav>
 
-        {/* RIGHT: Login & Sign Up CTAs */}
+        {/* RIGHT: Login, Demo & Sign Up CTAs */}
         <div className="hidden sm:flex items-center gap-2.5">
+          {onLaunchJudgeDemo && (
+            <button
+              id="landing-navbar-demo-btn"
+              onClick={onLaunchJudgeDemo}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold text-indigo-700 bg-indigo-50 hover:bg-indigo-100 active:bg-indigo-200 border border-indigo-200 transition-all duration-200 cursor-pointer shadow-xs"
+              title="Launch complete 9-step hackathon judge evaluation demo"
+            >
+              <span className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse" />
+              <span>Judge Demo Mode</span>
+            </button>
+          )}
+
           <button
             id="landing-navbar-login-btn"
             onClick={onNavigateLogin}

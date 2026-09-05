@@ -50,14 +50,15 @@ def get_student_learning_path(user_id: str = Depends(get_current_user_id)):
         logger.error(f"Error fetching learning path: {e}")
         return generate_personalized_learning_path("STEM & AI Foundations")
 
+@router.post("/create")
 @router.post("/generate")
 def create_custom_learning_path(
     payload: Dict[str, Any],
     user_id: str = Depends(get_current_user_id)
 ):
-    """Generate and persist a new custom learning track for student"""
+    """Generate and persist a structured multi-milestone learning roadmap for the student"""
     try:
-        topic = payload.get("topic") or "STEM Track"
+        topic = payload.get("topic") or payload.get("subject") or "STEM Track"
         level = payload.get("level") or "beginner"
         goal = payload.get("goal") or "understand_concept"
 

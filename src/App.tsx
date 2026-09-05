@@ -19,7 +19,8 @@ import {
 import { 
   DEMO_LESSON_PLAN, 
   DEMO_LEARNING_REPORT, 
-  DEMO_ASSESSMENT_QUESTIONS
+  DEMO_ASSESSMENT_QUESTIONS,
+  DEMO_STUDENT_PROFILE
 } from './data/mockData';
 import { Navbar } from './components/layout/Navbar';
 import { LandingPage } from './components/landing/LandingPage';
@@ -270,6 +271,76 @@ export function App() {
     setCurrentScreen('lesson_plan');
   };
 
+  const handleLaunchJudgeDemo = () => {
+    // 1. Authenticate Judge Demo Session
+    const demoUser: AuthUser = {
+      id: 'usr_judge_eval_01',
+      name: 'Aryan Verma (Judge Demo)',
+      email: 'judge.evaluator@edumitra.ai'
+    };
+    setSessionUser(demoUser);
+
+    // 2. Configure Student Profile matching Hackathon Judge specifications
+    const demoProfile: StudentProfile = {
+      ...DEMO_STUDENT_PROFILE,
+      name: 'Aryan Verma (Judge Demo)',
+      level: 'beginner',
+      preferredLanguage: 'hinglish',
+      educationLevel: 'high_school',
+      learningGoal: 'understand_concept',
+      teachingStyle: 'simple_visual',
+      overallMastery: 78,
+      completedLessons: 6,
+      learningTimeHours: 12.5,
+      masteredConceptsCount: 14
+    };
+    setStudent(demoProfile);
+    setSelectedAvatarId('priya');
+    setSelectedLanguage('hinglish');
+
+    // 3. Populate Uploaded Textbook Material
+    const demoDoc: UploadedMaterial = {
+      id: 'doc_judge_physics_01',
+      name: 'NCERT Class 10 Physics - Chapter 4: Electricity.pdf',
+      title: 'NCERT Class 10 Physics - Chapter 4: Electricity',
+      size: '2.4 MB',
+      pages: 18,
+      uploadedAt: 'Just now',
+      type: 'PDF',
+      status: 'ready',
+      keyConceptsExtracted: ["Ohm's Law", 'Electric Potential & Voltage', 'Resistance & Resistivity', 'Circuit Analogy'],
+      summary: 'Foundational physics textbook chapter covering current, potential difference, and circuit behavior.'
+    };
+    setDraftMaterial(demoDoc);
+    setDraftTopic("Electricity & Ohm's Law (Chapter 4)");
+    setMaterials(prev => [demoDoc, ...prev.filter(m => m.id !== demoDoc.id)]);
+
+    // 4. Set Active Lesson Plan with Circuit Simulation & Diagnostic Misconception Check
+    setActiveLessonPlan(DEMO_LESSON_PLAN);
+    setActiveReport(DEMO_LEARNING_REPORT);
+    setAssessmentQuestions(DEMO_ASSESSMENT_QUESTIONS);
+
+    // 5. Save in-progress state and transition to classroom
+    const inProgressData: InProgressLesson = {
+      id: DEMO_LESSON_PLAN.id,
+      title: DEMO_LESSON_PLAN.title,
+      subject: DEMO_LESSON_PLAN.subject,
+      category: DEMO_LESSON_PLAN.category,
+      level: DEMO_LESSON_PLAN.level,
+      language: DEMO_LESSON_PLAN.language,
+      duration: DEMO_LESSON_PLAN.duration,
+      currentStepIndex: 0,
+      totalSteps: DEMO_LESSON_PLAN.steps.length,
+      currentConcept: DEMO_LESSON_PLAN.steps[0]?.concept || DEMO_LESSON_PLAN.title,
+      progressPercentage: 20,
+      updatedAt: new Date().toISOString(),
+      steps: DEMO_LESSON_PLAN.steps
+    };
+    setInProgressLesson(inProgressData);
+
+    setCurrentScreen('classroom');
+  };
+
   const handleStartClassroom = () => {
     setCurrentScreen('classroom');
   };
@@ -400,6 +471,7 @@ export function App() {
           <LandingPage
             onNavigateLogin={() => setCurrentScreen('login')}
             onNavigateSignUp={() => setCurrentScreen('signup')}
+            onLaunchJudgeDemo={handleLaunchJudgeDemo}
           />
         </motion.div>
       )}
@@ -451,6 +523,7 @@ export function App() {
           <LandingPage
             onNavigateLogin={() => setCurrentScreen('login')}
             onNavigateSignUp={() => setCurrentScreen('signup')}
+            onLaunchJudgeDemo={handleLaunchJudgeDemo}
           />
         </motion.div>
       )}
@@ -513,6 +586,7 @@ export function App() {
             student={student}
             onStartNewLesson={handleStartNewLesson}
             onLogout={handleLogout}
+            onLaunchJudgeDemo={handleLaunchJudgeDemo}
           />
 
           {/* Main View Container with Smooth Transitions */}

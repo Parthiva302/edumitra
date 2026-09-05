@@ -17,6 +17,7 @@ import heroLearningImage from '../../assets/images/edumitra_hero_learning_178836
 interface LandingPageProps {
   onNavigateLogin: () => void;
   onNavigateSignUp: () => void;
+  onLaunchJudgeDemo?: () => void;
 }
 
 const heroContainerVariants = {
@@ -42,6 +43,7 @@ const heroItemVariants = {
 export const LandingPage: React.FC<LandingPageProps> = ({
   onNavigateLogin,
   onNavigateSignUp,
+  onLaunchJudgeDemo,
 }) => {
   const scrollToSection = (sectionId: string) => {
     if (sectionId === 'hero') {
@@ -99,32 +101,31 @@ export const LandingPage: React.FC<LandingPageProps> = ({
 
   return (
     <div id="edumitra-public-landing" className="min-h-screen bg-[#F5F7F8] text-[#17232D] flex flex-col font-sans selection:bg-[#4F7CAC] selection:text-white">
-      {/* 1. PUBLIC NAVBAR */}
-      <LandingNavbar
+      {/* Global Landing Navbar */}
+      <LandingNavbar 
         onNavigateLogin={onNavigateLogin}
         onNavigateSignUp={onNavigateSignUp}
         onScrollToSection={scrollToSection}
+        onLaunchJudgeDemo={onLaunchJudgeDemo}
       />
 
-      <main className="flex-1 w-full">
-        {/* 2. HERO SECTION */}
-        <section 
-          id="hero" 
-          className="relative pt-8 pb-16 md:pt-16 md:pb-24 border-b border-[#DCE4EC] bg-white overflow-hidden scroll-mt-20"
-        >
+      <main id="main-content">
+        {/* HERO SECTION */}
+        <section id="hero" className="relative pt-8 sm:pt-14 pb-14 sm:pb-20 overflow-hidden bg-gradient-to-b from-[#F3F7FA]/70 via-white to-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
               
-              {/* Left Column: Left-aligned content with subtle staggered load animation */}
+              {/* Left Column: Hero Value Proposition */}
               <motion.div 
+                className="lg:col-span-7 space-y-6"
                 variants={heroContainerVariants}
                 initial="hidden"
                 animate="visible"
-                className="lg:col-span-7 space-y-6 md:space-y-7 text-left z-10"
               >
-                {/* Eyebrow */}
-                <motion.div variants={heroItemVariants} className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#F3F7FA] border border-[#DCE4EC] text-[#4F7CAC] text-xs font-mono font-medium tracking-wider uppercase transition-colors duration-200">
-                  <span>Personal AI Learning Platform</span>
+                {/* Product Identity Pill */}
+                <motion.div variants={heroItemVariants} className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#E8F1F7] border border-[#D0E1EE] text-[#3F6687] text-xs font-medium shadow-[0_1px_2px_rgba(23,35,45,0.02)]">
+                  <GraduationCap className="w-3.5 h-3.5 text-[#4F7CAC]" />
+                  <span>Next-Generation Adaptive Learning</span>
                 </motion.div>
 
                 {/* Main Headline */}
@@ -140,6 +141,17 @@ export const LandingPage: React.FC<LandingPageProps> = ({
 
                 {/* CTAs with unified button interaction system */}
                 <motion.div variants={heroItemVariants} className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
+                  {onLaunchJudgeDemo && (
+                    <button
+                      id="hero-judge-demo-btn"
+                      onClick={onLaunchJudgeDemo}
+                      className="group px-5 py-3 rounded-md bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-semibold text-sm flex items-center justify-center gap-2 transition-all duration-200 cursor-pointer shadow-[0_1px_3px_rgba(79,70,229,0.3)] hover:shadow-[0_4px_14px_rgba(79,70,229,0.35)] hover:-translate-y-0.5 active:translate-y-0"
+                    >
+                      <Sparkles className="w-4 h-4 text-indigo-200 animate-pulse" />
+                      <span>Judge Demo Mode (Instant Evaluation)</span>
+                    </button>
+                  )}
+
                   <button
                     id="hero-create-account-btn"
                     onClick={onNavigateSignUp}

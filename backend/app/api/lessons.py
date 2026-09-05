@@ -12,6 +12,7 @@ from app.schemas.lesson import (
 from app.database.supabase import (
     get_supabase,
     upsert_lesson,
+    get_lesson_by_id,
     insert_lesson_steps,
     get_user_lessons,
     get_in_progress_lesson,
@@ -20,6 +21,7 @@ from app.database.supabase import (
 from app.services.lesson_planner import generate_personalized_lesson_plan
 from app.services.video_generator import generate_video_scene_plan
 from app.services.rag_service import search_relevant_chunks
+from app.services.teaching_engine import advance_teaching_state
 from app.api.auth_deps import get_current_user_id
 
 router = APIRouter(prefix="/api/lessons", tags=["lessons"])
@@ -32,9 +34,10 @@ def create_lesson(payload: CreateLessonRequest, user_id: str = Depends(get_curre
         topic = payload.topic.strip()
         doc_context = payload.document_text or ""
         
-        # If material_id is provided, retrieve relevant grounded context
-        if payload.material_id:
-            chunks = search_relevant_chunks(topic, user_id, material_id=payload.material_id, top_k=4)
+        # If material_id or document_id is provided, retrieve relevant grounded context
+        mat_id = payload.material_id or getattr(payload, "document_id", None)
+        if mat_id:
+            chunks = search_relevant_chunks(topic, user_id, material_id=mat_id, top_k=4)
             if chunks:
                 doc_context = "\n\n".join(c.get("content", "") for c in chunks)
 
@@ -79,17 +82,21 @@ def create_lesson(payload: CreateLessonRequest, user_id: str = Depends(get_curre
         lesson_db_record = {
             "id": lesson_id,
             "user_id": user_id,
-            "material_id": payload.material_id,
+            "material_id": mat_id,
+            "document_id": mat_id,
             "topic": topic,
+            "title": generated_plan.get("title", topic),
             "subject": generated_plan.get("subject", "General STEM"),
             "chapter": generated_plan.get("category", "Core Concepts"),
             "learning_objective": payload.goal,
             "learner_level": payload.level,
+            "education_level": payload.level,
             "language": payload.language,
             "duration_minutes": 20 if "20" in payload.duration else 10 if "10" in payload.duration else 5,
             "teaching_style": payload.style,
             "status": "in_progress",
             "current_step": 0,
+            "current_section": 0,
             "total_steps": len(generated_plan.get("steps", [])),
             "progress_percentage": 0,
             "started_at": datetime.utcnow().isoformat()
@@ -142,6 +149,57 @@ def get_active_in_progress_lesson(user_id: str = Depends(get_current_user_id)):
     lesson = get_in_progress_lesson(user_id)
     return lesson
 
+@router.get("/{lesson_id}")
+def get_lesson_by_identifier(
+    lesson_id: str,
+    user_id: str = Depends(get_current_user_id)
+):
+    """Retrieve full details of a specific lesson by ID"""
+    lesson = get_lesson_by_id(lesson_id, user_id)
+    if not lesson:
+        raise HTTPException(status_code=404, detail="Lesson not found.")
+    return lesson
+
+@router.post("/{lesson_id}/next")
+def advance_lesson_state_machine(
+    lesson_id: str,
+    payload: Dict[str, Any],
+    user_id: str = Depends(get_current_user_id)
+):
+    """
+    Advance teaching state machine for lesson:
+    UNDERSTAND -> PLAN -> EXPLAIN -> DEMONSTRATE -> QUESTION -> EVALUATE -> ADAPT -> CONTINUE -> COMPLETE
+    """
+    try:
+        current_state = payload.get("current_state", "UNDERSTAND")
+        student_answer = payload.get("student_answer")
+        mastery_score = int(payload.get("mastery_score", 50))
+        language = payload.get("language", "hinglish")
+        
+        # Load lesson context if available
+        lesson = get_lesson_by_id(lesson_id, user_id) or {}
+        context = {
+            "lesson_id": lesson_id,
+            "topic": lesson.get("topic", payload.get("topic", "Foundational STEM")),
+            "concept": payload.get("concept", lesson.get("topic", "Core Principle")),
+            "difficulty": lesson.get("learner_level", "INTERMEDIATE"),
+            "question_text": payload.get("question_text"),
+            "expected_answer": payload.get("expected_answer"),
+            "is_last_step": payload.get("is_last_step", False)
+        }
+
+        transition = advance_teaching_state(
+            current_state=current_state,
+            lesson_context=context,
+            student_answer=student_answer,
+            mastery_score=mastery_score,
+            language=language
+        )
+        return transition
+    except Exception as e:
+        logger.error(f"Error advancing lesson state machine: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
 @router.post("/progress")
 def save_lesson_step_progress(
     payload: SaveLessonProgressRequest,
@@ -152,6 +210,7 @@ def save_lesson_step_progress(
         supabase = get_supabase()
         supabase.table("lessons").update({
             "current_step": payload.current_step_index,
+            "current_section": payload.current_step_index,
             "total_steps": payload.total_steps,
             "progress_percentage": payload.progress_percentage,
             "updated_at": datetime.utcnow().isoformat()

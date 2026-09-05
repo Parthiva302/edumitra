@@ -388,5 +388,103 @@ export const api = {
       })
     });
     return await res.json();
+  },
+
+  // Hackathon Specification Named API Wrappers
+  uploadDocument: async (file: File): Promise<UploadedMaterial> => {
+    return await api.uploadMaterial(file);
+  },
+
+  searchKnowledge: async (query: string, documentId?: string) => {
+    const res = await fetch('/api/rag/search', {
+      method: 'POST',
+      headers: getHeaders(),
+      body: JSON.stringify({ query, document_id: documentId })
+    });
+    if (!res.ok) throw new Error('Search knowledge failed');
+    return await res.json();
+  },
+
+  getNextLessonStep: async (params: {
+    lessonId: string;
+    currentState: string;
+    studentAnswer?: string;
+    masteryScore?: number;
+    language?: string;
+    concept?: string;
+    topic?: string;
+  }) => {
+    const res = await fetch(`/api/lessons/${params.lessonId}/next`, {
+      method: 'POST',
+      headers: getHeaders(),
+      body: JSON.stringify({
+        current_state: params.currentState,
+        student_answer: params.studentAnswer,
+        mastery_score: params.masteryScore,
+        language: params.language,
+        concept: params.concept,
+        topic: params.topic
+      })
+    });
+    if (!res.ok) throw new Error('Failed to advance teaching state');
+    return await res.json();
+  },
+
+  submitAnswer: async (params: {
+    questionId: string;
+    answer: string;
+    concept?: string;
+    question?: string;
+    expectedAnswer?: string;
+    lessonId?: string;
+    language?: string;
+  }) => {
+    const res = await fetch(`/api/questions/${params.questionId}/answer`, {
+      method: 'POST',
+      headers: getHeaders(),
+      body: JSON.stringify({
+        answer: params.answer,
+        student_answer: params.answer,
+        concept: params.concept || 'Core Concept',
+        question: params.question,
+        expected_answer: params.expectedAnswer,
+        lesson_id: params.lessonId,
+        language: params.language || 'hinglish'
+      })
+    });
+    if (!res.ok) throw new Error('Failed to submit answer');
+    return await res.json();
+  },
+
+  getAssessment: async (lessonId: string) => {
+    const res = await fetch(`/api/assessment/${lessonId}`, {
+      method: 'POST',
+      headers: getHeaders(),
+      body: JSON.stringify({ lesson_id: lessonId })
+    });
+    if (!res.ok) throw new Error('Failed to fetch assessment');
+    return await res.json();
+  },
+
+  getProgress: async (): Promise<UserDataBundle> => {
+    return await api.getUserData();
+  },
+
+  generateVideo: async (params: {
+    lessonId: string;
+    title: string;
+    subject: string;
+    steps: any[];
+    language?: string;
+  }) => {
+    return await api.generateVideoScenePlan(params);
+  },
+
+  getVideoStatus: async (jobId: string) => {
+    const res = await fetch(`/api/video/${jobId}/status`, {
+      headers: getHeaders(false)
+    });
+    if (!res.ok) throw new Error('Failed to get video status');
+    return await res.json();
   }
 };
