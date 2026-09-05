@@ -9,35 +9,87 @@
 
 ---
 
-## 📖 1. Overview & Pedagogical Philosophy
-
-Most educational AI systems act merely as **chatbots with a persona** or **PDF question-answer bots**. They produce passive monologues, hallucinate unsourced claims, or simply stream generated scripts without measuring comprehension.
-
-**EduMitra** is fundamentally engineered as an authentic **Personal AI Teacher** built upon an active, cognitive pedagogical loop:
-
-```
-  ┌───────────────────────────────────────────────────────────────────────────────┐
-  │                           THE ACTIVE TEACHING LOOP                            │
-  │                                                                               │
-  │   UNDERSTAND ──► PLAN ──► EXPLAIN ──► DEMONSTRATE ──► QUESTION ──► EVALUATE   │
-  │                                                                       │       │
-  │      ┌────────────────────────────────────────────────────────────────┘       │
-  │      ▼                                                                        │
-  │   [Correct?] ──► YES ──► ADAPT (Increase Difficulty) ──► CONTINUE             │
-  │      │                                                                        │
-  │      └──► NO  ──► DETECT MISCONCEPTION ──► RE-EXPLAIN (Analogy) ──► RETRY     │
-  │                                                                       │       │
-  │      ┌────────────────────────────────────────────────────────────────┘       │
-  │      ▼                                                                        │
-  │   COMPLETE ──► COMPREHENSIVE ASSESSMENT ──► ADAPTIVE LEARNING PATH            │
-  └───────────────────────────────────────────────────────────────────────────────┘
-```
-
-The system continuously assesses understanding, diagnoses underlying conceptual fallacies (rather than merely grading right/wrong), switches analogies and visual models dynamically, and guides students towards true mastery.
+## 📑 Table of Contents
+1. [Problem Statement](#1-problem-statement)
+2. [Solution Overview](#2-solution-overview)
+3. [Key Features](#3-key-features)
+4. [System Architecture](#4-system-architecture)
+5. [AI/ML Models Used](#5-aiml-models-used)
+6. [RAG Implementation](#6-rag-implementation)
+7. [Prompt & Agent Architecture](#7-prompt--agent-architecture)
+8. [Personalization Approach](#8-personalization-approach)
+9. [Assessment Methodology](#9-assessment-methodology)
+10. [Multilingual Implementation](#10-multilingual-implementation)
+11. [Voice Implementation](#11-voice-implementation)
+12. [Avatar & Video Generation Approach](#12-avatar--video-generation-approach)
+13. [APIs & Third-Party Services](#13-apis--third-party-services)
+14. [Setup Instructions](#14-setup-instructions)
+15. [Deployment Instructions](#15-deployment-instructions)
+16. [Known Limitations](#16-known-limitations)
+17. [Judge Demo Mode Walkthrough](#17-judge-demo-mode-walkthrough)
 
 ---
 
-## 🏛️ 2. System Architecture
+## 1. Problem Statement
+
+Most modern educational technology platforms suffer from fundamental pedagogical deficiencies:
+
+1. **The "Chatbot Disguised as a Teacher" Trap**: Existing AI learning tools are essentially generic conversational chatbots (e.g. standard ChatGPT wrappers). They deliver massive textual monologues without checking whether the learner understands, lacks prerequisite knowledge, or is overwhelmed.
+2. **Passive PDF Q&A**: Conventional RAG systems act merely as semantic search engines answering queries from documents. They do not teach, structure a curriculum, or facilitate progressive cognitive mastery.
+3. **Absence of Misconception Diagnosis**: Standard grading engines rely on simplistic keyword checks or binary "Right/Wrong" evaluations. They fail to identify *why* a student answered incorrectly, failing to diagnose underlying conceptual errors (such as confusing inverse proportionality with direct proportionality).
+4. **Static Monolithic Video Generation**: Existing video generators attempt to generate 10-to-20 minute videos as single opaque video files. These videos are non-interactive, prohibit live student interruption, cannot adapt dynamically mid-stream to student confusion, and take minutes or hours to render.
+5. **One-Size-Fits-All Pacing**: Content is not adapted to student time constraints (e.g., needing a 5-minute pre-exam flash recap vs. a 60-minute first-principles derivation) or linguistic background (e.g., understanding concepts in Hinglish or Telugu while studying English textbooks).
+
+---
+
+## 2. Solution Overview
+
+**EduMitra** is engineered from first principles as an authentic **Personal AI Teacher** rather than a chatbot. It is anchored in an active, cognitive pedagogical loop:
+
+```
+  ┌─────────────────────────────────────────────────────────────────────────────────┐
+  │                         THE ACTIVE PEDAGOGICAL LOOP                             │
+  │                                                                                 │
+  │   UNDERSTAND ──► PLAN ──► EXPLAIN ──► DEMONSTRATE ──► QUESTION ──► EVALUATE     │
+  │                                                                         │       │
+  │      ┌──────────────────────────────────────────────────────────────────┘       │
+  │      ▼                                                                          │
+  │   [Correct?] ──► YES ──► ADAPT (Increase Difficulty) ──► CONTINUE               │
+  │      │                                                                          │
+  │      └──► NO  ──► DETECT MISCONCEPTION ──► RE-EXPLAIN (Analogy) ──► RETRY       │
+  │                                                                         │       │
+  │      ┌──────────────────────────────────────────────────────────────────┘       │
+  │      ▼                                                                          │
+  │   COMPLETE ──► COMPREHENSIVE ASSESSMENT ──► ADAPTIVE LEARNING PATH              │
+  └─────────────────────────────────────────────────────────────────────────────────┘
+```
+
+Instead of passive video streaming, EduMitra choreographs lessons into interactive scenes. An AI teacher avatar narrates concepts using natural synchronized speech, switches between 10 interactive visual simulation engines (circuits, fluid models, kinematic graphs, code tracing), periodically halts playback to verify understanding with Bloom's taxonomy questions, and dynamically rewrites its teaching strategy when misconceptions arise.
+
+---
+
+## 3. Key Features
+
+- **Pedagogical State Machine**: Deterministic 9-state teaching engine (`UNDERSTAND`, `PLAN`, `EXPLAIN`, `DEMONSTRATE`, `QUESTION`, `EVALUATE`, `ADAPT`, `CONTINUE`, `COMPLETE`).
+- **Grounded 768-Dim RAG**: Ingests PDFs, Word DOCX, PowerPoint PPTX, and text notes. Uses Google `text-embedding-004` and PostgreSQL `pgvector` with strict multi-tenant Row Level Security (RLS).
+- **8-Step Cognitive Remediation**: Isolates root-cause misconceptions, swaps technical definitions for real-world physical metaphors (e.g., water pipe constriction for electrical resistance), and re-evaluates before progressing.
+- **Subject-Aware Visual Engine (10 Simulators)**:
+  - *Physics/Circuits*: Real-time Ohm's Law circuit simulator with live electron animation.
+  - *Analogy Models*: Fluid dynamics water-pipe simulation for voltage/current/resistance.
+  - *Mechanics*: Kinematics projectile simulator with parabolic trajectory tracing.
+  - *Computer Science*: Interactive Postman-style REST API workbench and step-by-step code execution tracer.
+  - *Natural Sciences*: Molecular chemistry bond balancer and zoomable SVG biology cell anatomy.
+  - *Mathematics*: KaTeX-rendered step-by-step formula derivations and function graphing.
+  - *Humanities*: Interactive chronological history timelines.
+- **Scene-Based Interactive Video Studio**: Asynchronous scene choreography with dynamic on-screen shot text, word-boundary lip-sync, and automatic question pauses.
+- **Time-Based Adaptive Depth**: 5-minute flash summaries, 20-minute core lessons, 60-minute practical labs, and 7-day structured revision plans.
+- **Multilingual Support**: Decoupled document language from teaching language (supports English, Hindi, Hinglish, Telugu, Tamil, etc.).
+- **Long-Term Memory & Learning Analytics**: Dynamic mastery scoring (0-100), automated study notes, spaced-repetition flashcards, and interactive concept dependency maps.
+- **Turnkey Judge Demo Mode**: 1-click evaluation flow designed specifically for hackathon evaluation.
+
+---
+
+## 4. System Architecture
 
 ```
                                     +------------------------------+
@@ -59,48 +111,28 @@ The system continuously assesses understanding, diagnoses underlying conceptual 
 +-----------------------+           +------------------------------+           +-----------------------+
 ```
 
-### Backend Directory Structure
-```
-backend/
-├── app/
-│   ├── main.py                  # FastAPI application entry & middleware
-│   ├── config.py                # Pydantic environment settings
-│   ├── api/
-│   │   ├── auth.py              # User authentication & registration
-│   │   ├── documents.py         # Ingestion, status, chunk counts
-│   │   ├── rag.py               # Vector similarity search & grounded Q&A
-│   │   ├── lessons.py           # Lesson creation & state advancement
-│   │   ├── questions.py         # Formative question evaluation
-│   │   ├── assessment.py        # Post-lesson diagnostic assessment
-│   │   ├── progress.py          # Mastery scores & learning progress
-│   │   ├── students.py          # Learner profile & personalization
-│   │   ├── video.py             # Scene video generation & async jobs
-│   │   └── learning_path.py     # Multi-stage curriculum path generation
-│   ├── services/
-│   │   ├── gemini.py            # Unified Google GenAI client (Gemini 2.5 Flash)
-│   │   ├── embeddings.py        # Google text-embedding-004 (768-dim)
-│   │   ├── document_processor.py# PyMuPDF/docx/pptx extraction & semantic chunking
-│   │   ├── rag_service.py       # pgvector similarity search & grounded context
-│   │   ├── lesson_planner.py    # Time-scoped & personalized lesson planner
-│   │   ├── teaching_engine.py   # 9-state teaching state machine orchestrator
-│   │   ├── question_generator.py# Bloom's taxonomy question synthesis
-│   │   ├── evaluator.py         # Semantic answer grading & partial credit
-│   │   ├── misconception_detector.py # 8-step cognitive remediation protocol
-│   │   ├── adaptive_engine.py   # Mastery scoring & difficulty transitions
-│   │   ├── visual_planner.py    # Subject-aware interactive visual mapping
-│   │   └── video_generator.py   # Multi-scene choreography & job tracking
-│   ├── prompts/                 # Specialized pedagogical prompt templates
-│   ├── database/                # Supabase client & resilient schema fallback
-│   └── schemas/                 # Pydantic v2 validation contracts
-├── tests/                       # Pytest test suite (16 test cases)
-└── requirements.txt             # Locked Python dependencies
-```
+### Architecture Components & Workflow
+1. **Frontend Layer (React 19 + TypeScript)**: Built with Vite, Tailwind CSS, Lucide icons, KaTeX LaTeX math rendering, and Web Speech API audio-visual synchronization.
+2. **API Gateway / Proxy (Express `server.ts`)**: Serves the Single Page Application and proxies all `/api/*` traffic directly to the FastAPI backend on port 8000.
+3. **Backend Service Layer (FastAPI)**: Implements asynchronous Python endpoints for document extraction, vector ingestion, lesson generation, state machine progression, evaluation, and background video job tracking.
+4. **AI Intelligence Layer (Google Gemini 2.5 Flash)**: Primary LLM orchestrator handling semantic document chunking, lesson planning, question generation, answer evaluation, and cognitive misconception detection.
+5. **Database & Vector Store (Supabase PostgreSQL + pgvector)**: Stores relational application data (users, profiles, lessons, sections, progress, assessments) and performs cosine similarity vector searches via PostgreSQL RPC functions.
 
 ---
 
-## 📚 3. Production RAG Pipeline (pgvector 768-dim)
+## 5. AI/ML Models Used
 
-EduMitra implements a strict, enterprise-grade RAG pipeline that prevents hallucinations by grounding all explanations in student-provided materials.
+| Model | Purpose | Dimensions / Context | Rationale |
+| :--- | :--- | :--- | :--- |
+| **`gemini-2.5-flash`** | Primary LLM Orchestrator | 1,000,000+ tokens context | Ultra-fast inference latency (~500ms), robust JSON mode adherence, superior pedagogical reasoning, and multi-turn Socratic dialogue capability. |
+| **`text-embedding-004`** | Document Vector Embeddings | 768 dimensions | High semantic retrieval density, optimized for technical and academic texts, native integration with Google GenAI SDK. |
+| **`veo-2.0-generate-001`** *(Optional/Video)* | High-Fidelity Scene Clips | 16:9 / 1080p | High-aesthetic scene b-roll generation for complex physical demonstrations when video rendering is invoked. |
+
+---
+
+## 6. RAG Implementation
+
+EduMitra enforces a strict, production-ready Retrieval-Augmented Generation pipeline to ground all document-based teaching and prevent hallucinations.
 
 ```
 UPLOAD DOCUMENT (PDF / DOCX / PPTX / TXT)
@@ -127,7 +159,20 @@ GROUNDED CONTEXT INJECTION (Gemini 2.5 Flash)
 AUTHENTIC TEACHING OUTPUT WITH PRECISE CITATIONS (Page, Chapter, Section)
 ```
 
-### PostgreSQL Vector Search Function (`match_document_chunks`)
+### Chunking Strategy
+Unlike naive fixed-character splitters that sever formulas or code snippets mid-sentence, EduMitra uses **semantic boundary chunking**:
+- Segments at chapter, section, subsection, and paragraph boundaries.
+- Preserves document hierarchy and metadata:
+  ```json
+  {
+    "page_number": 42,
+    "chapter": "Chapter 4: Electricity",
+    "section": "Ohm's Law & Resistance",
+    "chunk_index": 17
+  }
+  ```
+
+### Vector Search PostgreSQL RPC (`match_document_chunks`)
 ```sql
 CREATE OR REPLACE FUNCTION match_document_chunks(
     query_embedding vector(768),
@@ -172,248 +217,246 @@ $$;
 
 ---
 
-## 🎯 4. Student Personalization & Time-Based Learning
+## 7. Prompt & Agent Architecture
 
-EduMitra tailors every lesson before teaching begins using multidimensional learner profiles:
+The backend prompt system is split into specialized, single-responsibility pedagogical modules located in `backend/app/prompts/`:
 
-| Profile Dimension | Options / Values | Pedagogical Impact |
+### 1. `teacher.py` (Teaching Persona & Dialogue Engine)
+- Establishes the authoritative yet warm Socratic teacher persona.
+- Mandates first-principles reasoning, intuitive analogies before mathematical formulas, and active student engagement.
+- Enforces tone and vocabulary adaptation based on the student's education level.
+
+### 2. `lesson_planner.py` (Curriculum & Visual Dispatcher)
+- Synthesizes duration-scoped JSON curricula (5m, 20m, 60m, 7d).
+- Determines optimal visualizer types (`circuit_simulator`, `water_pipe_analogy`, `physics_simulator`, `api_workflow`, `code_runner`, etc.).
+- Allocates precise time budgets per section.
+
+### 3. `evaluator.py` (Semantic Rubric & Partial Credit)
+- Evaluates student responses conceptually rather than using literal string matching.
+- Returns structured JSON:
+  ```json
+  {
+    "correct": false,
+    "score": 35,
+    "concept_understood": false,
+    "misconception_detected": true,
+    "misconception": "Confuses inverse proportionality with direct proportionality",
+    "feedback": "You noticed that current changes, but let us look at the direction of change...",
+    "recommended_action": "REEXPLAIN",
+    "next_difficulty": "BEGINNER"
+  }
+  ```
+
+### 4. `misconception.py` (8-Step Cognitive Remediation)
+- Deconstructs the student's flawed mental model.
+- Generates an alternate real-world metaphor (e.g., constricting a garden hose).
+- Synthesizes a simplified single-variable diagnostic question to re-establish confidence.
+
+### 5. `question_generator.py` (Bloom's Taxonomy Generator)
+- Generates MCQs, conceptual questions, problem-solving prompts, and open-ended "explain in your own words" challenges mapped directly to specific concepts.
+
+---
+
+## 8. Personalization Approach
+
+Before any teaching session starts, EduMitra constructs a multidimensional learner profile:
+
+| Profile Attribute | Configurable Values | Pedagogical Impact |
 | :--- | :--- | :--- |
-| **Education Level** | Elementary, Middle, High School, Undergraduate, Professional | Tunes vocabulary, prerequisite assumptions, and conceptual abstraction. |
-| **Existing Knowledge** | None / Beginner / Intermediate / Advanced | Skips elementary definitions for advanced learners; scaffolds foundations for beginners. |
-| **Learning Objective** | Exam Prep, Conceptual Mastery, Quick Overview, Interview Prep | Focuses on formula derivations, problem solving, or architectural trade-offs. |
-| **Teaching Style** | Socratic, Analogy-Driven, First Principles, Step-by-Step Practical | Drives prompt style: Socratic inquiry vs. physical metaphors vs. code walkthroughs. |
-| **Language** | English, Hindi (हिन्दी), Hinglish, Telugu (తెలుగు), Tamil, etc. | Natural bilingual explanation; sources can be in English while teaching in Hindi. |
-
-### Time-Based Teaching Modes
-- **⚡ 5 Minutes (Flash Overview)**: Concentrates exclusively on the highest-priority core mental models. Skips tangential derivations; pairs 1 interactive visual with 1 diagnostic checkpoint.
-- **⏱️ 20 Minutes (Core Mastery)**: Complete 5-step curriculum: Concept ➔ Real-World Metaphor ➔ Visual Simulation ➔ Formative Questions ➔ Misconception Resolution.
-- **🔬 60 Minutes (Deep Dive & Practical Lab)**: Exhaustive derivations, edge cases, interactive sandbox simulations, code execution, and multi-question diagnostic assessments.
-- **📅 7 Days (Curriculum Learning Path)**: Structured day-by-day syllabus with spaced repetition, interleaved topics, flashcards, and cumulative milestone tests.
+| **Education Level** | Elementary, Middle School, High School, Undergraduate, Professional | Controls vocabulary, prerequisite knowledge assumptions, and formal rigor. |
+| **Existing Knowledge** | None / Beginner / Intermediate / Advanced | Skips elementary definitions for advanced learners; reinforces fundamentals for beginners. |
+| **Learning Objective** | Exam Preparation, Conceptual Mastery, Quick Overview, Interview Prep | Prioritizes formula derivations, practical problem solving, or architecture trade-offs. |
+| **Teaching Style** | Socratic, Analogy-Driven, First Principles, Step-by-Step Practical | Drives prompt style: probing questions vs. physical metaphors vs. code walkthroughs. |
+| **Available Duration** | 5 Minutes, 20 Minutes, 60 Minutes, 7 Days | Scopes depth from high-yield flashcards to multi-stage simulation laboratories. |
 
 ---
 
-## 🧠 5. AI Teaching State Machine & Misconception Remediation
+## 9. Assessment Methodology
 
-The teaching engine is governed by a deterministic 9-state machine:
+EduMitra abandons traditional high-stakes testing in favor of **continuous formative assessment**:
 
-```
-[1. UNDERSTAND] ──► Analyzes student goals, RAG context, and prior weak concepts.
-[2. PLAN]       ──► Synthesizes structured JSON lesson plan with timing and visual mapping.
-[3. EXPLAIN]    ──► Delivers multi-modal teaching narrative tailored to student language.
-[4. DEMONSTRATE]──► Triggers subject-aware interactive visualizers (circuits, timelines, code).
-[5. QUESTION]   ──► Formative evaluation checkpoint testing underlying causal understanding.
-[6. EVALUATE]   ──► Semantic scoring (0-100), partial credit, and misconception isolation.
-[7. ADAPT]      ──► If misconception detected: branches to 8-step cognitive remediation.
-[8. CONTINUE]   ──► Advances to next pedagogical section upon verified understanding.
-[9. COMPLETE]   ──► Synthesizes comprehensive diagnostic assessment and updates mastery graph.
-```
-
-### The 8-Step Cognitive Remediation Protocol
-When a student answers incorrectly (e.g., answering *"Current increases"* when resistance rises at constant voltage):
-1. **Never say merely "Incorrect"**: Validate the student's intuition and identify where their mental model diverged.
-2. **Diagnose Underlying Fallacy**: Identifies whether the error is inverse-proportionality confusion, sign error, or prerequisite omission.
-3. **Switch Analogies**: Replaces technical definitions with tangible real-world analogies (e.g., switches to the **Water-Pipe constriction model**).
-4. **Switch Visualizer**: Activates interactive simulator illustrating the bottleneck in real time.
-5. **Formulate Simpler Step**: Asks a targeted, lower-cognitive-load question isolating the single variable.
-6. **Re-evaluate**: Verifies the mental model has updated before increasing difficulty.
-7. **Reinforce**: Highlights the connection between the analogy and the formal scientific law.
-8. **Log to Profile**: Records misconception in `learning_progress` to reinforce during future revision sessions.
+1. **In-Lesson Formative Checkpoints**: Every pedagogical section concludes with a diagnostic question checking concept retention.
+2. **Adaptive Difficulty Scaling**:
+   - `0 – 40` (Needs Review): Re-explain with simpler visual analogy, reduce question cognitive load.
+   - `41 – 70` (Learning): Provide guided practice with hints.
+   - `71 – 85` (Good Understanding): Introduce multi-step problems.
+   - `86 – 100` (Mastered): Elevate to edge cases, synthesis, and transfer learning.
+3. **Comprehensive Post-Lesson Assessment (`POST /api/assessment/{lesson_id}`)**:
+   - Evaluates overall mastery percentage.
+   - Identifies specific **Strong Concepts** and **Weak Concepts**.
+   - Logs identified **Misconceptions**.
+   - Generates actionable **Recommended Revision** action items.
+   - Proposes the **Next Logical Topic** to study.
 
 ---
 
-## 🎨 6. Subject-Aware Visual Engine
+## 10. Multilingual Implementation
 
-EduMitra renders deterministic, interactive simulations dynamically matched to the lesson subject:
-
-| Visualizer Component | Subject Domain | Dynamic Capabilities |
-| :--- | :--- | :--- |
-| **Circuit Simulator** (`CircuitSimulator.tsx`) | Physics / Electronics | Live interactive circuit with battery voltage slider, resistor controls, switch toggles, dynamic electron flow, and Ohm's law meter ($V = IR, P = VI$). |
-| **Water-Pipe Analogy** (`WaterPipeAnalogy.tsx`) | Physics / Metaphors | Fluid dynamics simulation representing voltage as pump pressure, current as gallons/sec, and resistance as pipe constriction. |
-| **Physics Kinematics** (`PhysicsSimulator.tsx`) | Mechanics | Gravity, launch angle, initial velocity controls with real-time parabolic trajectory plotting and kinematic formulas ($v = u + at, s = ut + \frac{1}{2}at^2$). |
-| **API & REST Flow** (`ApiWorkflowVisual.tsx`) | Computer Science | Interactive Postman-style workbench with Method/Endpoint selection, headers, JSON body payloads, and real-time response status/latencies. |
-| **Code Runner Tracing** (`CodeRunnerVisual.tsx`) | Programming | Multi-language syntax highlighting (Python, JS, C++) with step-by-step call stack execution tracing and variable state inspector. |
-| **Chemistry Visual** (`ChemistryVisual.tsx`) | Chemistry | 2D/3D molecular bond builder, orbital valence counts, and chemical equation reaction balancer. |
-| **Biology Diagram** (`BiologyDiagram.tsx`) | Life Sciences | SVG anatomical diagrams with interactive callout labels, cell organelle zoom, and physiological process workflows. |
-| **Math Derivations** (`MathVisualizer.tsx`) | Mathematics | KaTeX LaTeX mathematical typography rendering with step-by-step algebraic derivations and 2D function graphing. |
-| **History Timeline** (`HistoryTimelineVisual.tsx`) | Humanities | Chronological timeline cards with era filters, event causality linkages, and primary-source quote cards. |
-| **Concept Hierarchy Card** (`ConceptCardVisual.tsx`) | General Disciplines | Multi-tiered conceptual dependency tree illustrating prerequisites, core axioms, and real-world applications. |
+EduMitra features a **decoupled language architecture**:
+- **Source Material Independence**: The uploaded textbook or notes can be written in English, yet the AI Teacher can deliver explanations in Hindi, Hinglish, Telugu, Tamil, or Spanish.
+- **Supported Languages**: English, Hindi (`hi`), Hinglish (`hi-En`), Telugu (`te`), Tamil (`ta`), Kannada (`kn`), Marathi (`mr`), Bengali (`bn`), Spanish (`es`), French (`fr`), German (`de`).
+- **Zero-Loss Language Switching**: Students can switch the teaching language dynamically mid-lesson without losing lesson progress, concept mastery scores, or visual simulation states.
 
 ---
 
-## 🎬 7. Video Teacher & Scene Architecture
+## 11. Voice Implementation
 
-Rather than attempting to generate fragile monolithic video files, EduMitra employs an asynchronous, scene-choreographed presentation studio:
+- **Web Speech API Integration**: Leverages the browser's native speech synthesis engine for zero-latency, high-fidelity vocal delivery.
+- **Word-Boundary Lip-Sync**: Uses `SpeechSynthesisUtterance.onboundary` events to drive synchronized avatar mouth movement, blinking cycles, and emotional reactions in real time.
+- **Modular Audio Pipeline**: Narration text is generated for every scene by the backend. The architecture allows external high-end TTS providers (ElevenLabs, Google Cloud Text-to-Speech) to be plugged in via environment variables without modifying the core state machine.
 
-```json
-{
-  "scenes": [
-    {
-      "scene_id": "scene_1_intro",
-      "title": "Introduction to Electrical Current",
-      "narration": "Welcome! Today we are exploring electric current—the actual flow of electrical charge through a conductor.",
-      "visual": { "type": "concept_card", "content": { "title": "Electric Current (I)", "unit": "Amperes (A)" } },
-      "on_screen_text": "Electric Current: Flow of Charge per Second (I = Q/t)",
-      "duration": 12,
-      "interaction_required": false
-    },
-    {
-      "scene_id": "scene_2_simulation",
-      "title": "Interactive Circuit Demonstration",
-      "narration": "Observe how increasing the resistor value constricts electron flow when the battery voltage remains 12 Volts.",
-      "visual": { "type": "circuit_simulation", "content": { "voltage": 12, "resistance": 20 } },
-      "on_screen_text": "Ohm's Law in Action: Current Decreases as Resistance Increases",
-      "duration": 18,
-      "interaction_required": false
-    },
-    {
-      "scene_id": "scene_3_checkpoint",
-      "title": "Formative Understanding Check",
-      "narration": "Let us pause and test your intuition before we proceed.",
-      "visual": { "type": "quiz_card", "content": { "concept": "Resistance" } },
-      "on_screen_text": "Checkpoint: What happens if resistance doubles?",
-      "duration": 10,
-      "interaction_required": true
-    }
-  ]
-}
-```
+---
 
-### Video Teacher Features
-- **Boundary-Synchronized Avatar Lip-Sync**: Synthesizes speech via the Web Speech API with word-boundary listeners, synchronizing mouth movements, eye blinks, and emotional expressions (encouraging, thoughtful, celebratory).
-- **Interactive Pauses**: Automatically pauses playback at formative question scenes, prompting the student to answer before progressing.
+## 12. Avatar & Video Generation Approach
+
+### Why Scene-Based Video Rather Than Monolithic Files?
+Monolithic video rendering (e.g. generating a single 15-minute MP4) takes minutes to render, cannot be interrupted by the student, fails to adapt to student confusion, and prevents live interaction with visual widgets.
+
+EduMitra solves this with an **Asynchronous Scene-Choreographed Studio**:
+- Lessons are partitioned into discrete, structured scenes (Teacher Intro, Concept Demonstration, Visual Simulation, Worked Example, Formative Checkpoint, Feedback Adaptation, Summary).
+- Each scene is represented as structured JSON:
+  ```json
+  {
+    "scene_id": "scene_02_simulation",
+    "title": "Interactive Circuit Demonstration",
+    "narration": "Notice how increasing resistance reduces the rate of electron flow...",
+    "visual": { "type": "circuit_simulation", "content": { "voltage": 12, "resistance": 20 } },
+    "on_screen_text": "Ohm's Law: I = V / R",
+    "duration": 15,
+    "interaction_required": false
+  }
+  ```
+- **Interactive Checkpoints**: When `interaction_required` is true, video playback pauses automatically, requiring the student to answer the teacher's question before continuing.
 - **Asynchronous Video Job API**: Supported via `POST /api/video/generate` and `GET /api/video/{job_id}/status` with automatic failure retries.
 
 ---
 
-## 🌐 8. Multilingual Teaching Engine
+## 13. APIs and Third-Party Services
 
-EduMitra decouples the **Source Document Language** from the **Target Teaching Language**:
-
-```
-English Textbook PDF ──► Grounded RAG Retrieval ──► Gemini Multilingual Orchestrator ──► Hindi Teaching (हिन्दी)
-```
-
-- **Supported Languages**: English, Hindi (`hi`), Hinglish (`hi-En`), Telugu (`te`), Tamil (`ta`), Kannada (`kn`), Marathi (`mr`), Bengali (`bn`), Spanish (`es`), French (`fr`), German (`de`).
-- **Dynamic Language Switching**: Learners can switch languages mid-lesson (e.g., English ➔ Hinglish ➔ Telugu) without resetting lesson progression, concept scores, or visual simulation states.
-
----
-
-## 🔌 9. REST API Specification
-
-| Method | Endpoint | Description | Request Payload / Params | Response Summary |
-| :--- | :--- | :--- | :--- | :--- |
-| `POST` | `/api/documents/upload` | Ingest PDF, DOCX, PPTX, TXT into 768-dim pgvector | `multipart/form-data` (file) | `{ id, filename, total_pages, chunk_count, status }` |
-| `GET` | `/api/documents` | List user documents with chunk counts & status | None (Header: Bearer Token) | `Array<{ id, filename, processing_status, ... }>` |
-| `GET` | `/api/documents/{id}` | Inspect document processing status & details | Path param: `id` | `{ id, filename, processing_status, chunk_count }` |
-| `POST` | `/api/rag/search` | Execute isolated pgvector cosine similarity search | `{ query, top_k?, document_id? }` | `{ results: Array<{ content, page, chapter, similarity }> }` |
-| `POST` | `/api/lessons/create` | Generate structured, personalized lesson | `{ topic, document_id?, duration_minutes, education_level, ... }` | `{ id, title, sections, visual_type, duration }` |
-| `GET` | `/api/lessons/{id}` | Retrieve lesson plan, current step, and status | Path param: `id` | `{ id, title, current_step, sections, status }` |
-| `POST` | `/api/lessons/{id}/next` | Advance 9-state teaching machine | `{ current_step, last_answer_correct? }` | `{ current_state, next_section, narration, visual }` |
-| `POST` | `/api/questions/{id}/answer`| Evaluate student answer & detect misconceptions | `{ answer, question_id, concept, expected_answer }` | `{ correct, score, misconception_detected, misconception, feedback, recommended_action }` |
-| `POST` | `/api/assessment/{lesson_id}`| Generate comprehensive diagnostic assessment | Path param: `lesson_id` | `{ score, strong_concepts, weak_concepts, misconceptions, recommended_revision, next_topic }` |
-| `GET` | `/api/progress` | Retrieve student mastery matrix & skill status | None (Header: Bearer Token) | `Array<{ topic, concept, mastery_score, status }>` |
-| `GET` | `/api/profile` | Retrieve personalized learner preferences | None (Header: Bearer Token) | `{ education_level, teaching_style, preferred_language, ... }` |
-| `PUT` | `/api/profile` | Update learner profile preferences | `{ education_level, preferred_language, teaching_style }` | Updated profile object |
-| `POST` | `/api/video/generate` | Dispatch asynchronous scene video generation | `{ lesson_id, scene_count }` | `{ job_id, status: "processing" }` |
-| `GET` | `/api/video/{job_id}/status` | Poll status of asynchronous video job | Path param: `job_id` | `{ job_id, status: "completed" \| "processing", video_url }` |
-| `POST` | `/api/learning-path/create`| Synthesize multi-stage mastery curriculum | `{ topic, goal, current_level, target_days }` | `{ path_id, topic, stages: Array<{ title, concepts, days }> }` |
+| Service | Provider | Role in EduMitra | Credentials Required |
+| :--- | :--- | :--- | :--- |
+| **Google Gemini 2.5 Flash** | Google AI Studio | Lesson planning, dialogue orchestration, answer evaluation, misconception diagnosis | `GEMINI_API_KEY` |
+| **Google text-embedding-004** | Google AI Studio | 768-dimensional document vector embeddings | `GEMINI_API_KEY` |
+| **PostgreSQL 15+ & pgvector** | Supabase | Relational data, user authentication, vector cosine similarity search | `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` |
+| **Supabase Storage** | Supabase | Secure encrypted storage of uploaded documents | `SUPABASE_SERVICE_ROLE_KEY` |
+| **Web Speech API** | Browser Native | Text-to-speech audio synthesis and word-boundary event dispatch | *None (Client Native)* |
 
 ---
 
-## 🏆 10. Judge Demo Mode Walkthrough
-
-A turnkey, 1-click evaluation flow designed specifically for hackathon judges:
-
-1. **Quick Launch**: On the Landing Page, click the prominent **"Judge Demo Mode"** button in the hero section or top navigation bar.
-2. **Step 1 — Document Ingestion & RAG Verification**: Automatically seeds a real physics curriculum document (*"Chapter 4: Electric Current, Voltage & Ohm's Law"*), extracts sections, generates 768-dim embeddings, and indexes chunks into PostgreSQL.
-3. **Step 2 — Student Personalization**: Configures student persona: *Education Level: Beginner*, *Language: Hinglish*, *Duration: 20 Minutes*, *Teaching Style: Analogy-Driven*.
-4. **Step 3 — Structured Lesson Plan**: Displays the 5-step curriculum generated by Gemini: Concept ➔ Water-Pipe Analogy ➔ Interactive Circuit Simulator ➔ Formative Checkpoint ➔ Ohm's Law Formula.
-5. **Step 4 — Video Teacher & Avatar Presentation**: Launches virtual classroom with speech synthesis, synchronized lip-sync, and on-screen shot text.
-6. **Step 5 — Interactive Simulation**: Engages the interactive **Circuit Simulator** visualizer; judges can adjust battery voltage (12V) and resistance (20Ω) to inspect real-time current readouts.
-7. **Step 6 — Active Questioning**: Teacher halts playback and asks: *"If battery voltage remains constant at 12V and resistance increases from 10Ω to 20Ω, what happens to current?"*
-8. **Step 7 — Misconception Detection in Action**: Submit the intentional incorrect answer: *"Current increases because there is more resistance."* Watch EduMitra immediately diagnose the inverse-proportionality misconception, switch analogies to the **Water-Pipe model**, and re-teach.
-9. **Step 8 — Adaptive Simpler Question**: Teacher asks a simplified single-variable question. Submit the correct answer (*"Current decreases"*). EduMitra elevates mastery and advances to the next section.
-10. **Step 9 — Final Assessment & Learning Dashboard**: Review comprehensive diagnostic report: Formative score (85%), strong concepts, diagnosed misconceptions, spaced repetition flashcards, interactive concept map, and recommended next topic (*"Series and Parallel Circuits"*).
-
----
-
-## ⚙️ 11. Local Setup & Deployment
+## 14. Setup Instructions
 
 ### Prerequisites
-- Node.js (v18.0+)
-- Python (v3.10+)
-- Supabase Project with `pgvector` enabled
-- Google Gemini API Key
+- Node.js (v18.0 or higher)
+- Python (v3.10 or higher)
+- Supabase account with a new project
+- Google Gemini API key from [Google AI Studio](https://aistudio.google.com/)
 
-### 1. Configure Environment Variables
-Copy `.env.example` to `.env`:
+### 1. Clone the Repository
+```bash
+git clone https://github.com/Parthiva302/edumitra.git
+cd edumitra
+```
+
+### 2. Configure Environment Variables
+Copy the template file:
 ```bash
 cp .env.example .env
 ```
-Fill in your credentials:
+Edit `.env` with your credentials:
 ```ini
 GEMINI_API_KEY=AIzaSy...
-SUPABASE_URL=https://your-project.supabase.co
+SUPABASE_URL=https://your-project-id.supabase.co
 SUPABASE_SERVICE_ROLE_KEY=eyJh...
 GEMINI_MODEL=gemini-2.5-flash
 GEMINI_EMBEDDING_MODEL=text-embedding-004
+GEMINI_VIDEO_MODEL=veo-2.0-generate-001
 FASTAPI_URL=http://127.0.0.1:8000
 USE_MOCK_AI=false
 ```
 
-### 2. Run Database Migrations
-Execute the SQL migration scripts in your Supabase SQL Editor:
-1. `supabase/migrations/001_initial_schema.sql` (Tables, constraints, vector column)
+### 3. Run Supabase Database Migrations
+In your Supabase project dashboard, navigate to the **SQL Editor** and run the migration scripts in order:
+1. `supabase/migrations/001_initial_schema.sql` (Tables, vector column, foreign keys)
 2. `supabase/migrations/002_vector_search.sql` (`match_document_chunks` RPC function)
 3. `supabase/migrations/003_rls.sql` (Row Level Security policies)
 
-### 3. Start Backend Server
+### 4. Install Backend Dependencies & Start FastAPI
 ```bash
 cd backend
 python -m venv venv
-# Windows:
+
+# On Windows:
 .\venv\Scripts\activate
-# macOS/Linux:
+# On macOS/Linux:
 source venv/bin/activate
 
 pip install -r requirements.txt
 python run.py
 ```
-Backend runs at `http://127.0.0.1:8000` (Interactive API docs at `http://127.0.0.1:8000/docs`).
+*The FastAPI backend will start at `http://127.0.0.1:8000` with interactive Swagger docs at `http://127.0.0.1:8000/docs`.*
 
-### 4. Start Frontend Client
-From the project root:
+### 5. Install Frontend Dependencies & Start Client
+Open a second terminal in the project root:
 ```bash
 npm install
 npm run dev
 ```
-Full-stack application will open at `http://localhost:5173`.
+*The React application will be accessible at `http://localhost:5173`.*
 
 ---
 
-## 🧪 12. Automated Test Suite
+## 15. Deployment Instructions
 
-Run the comprehensive pytest suite covering all 16 acceptance criteria:
+### Production Frontend Build
+```bash
+npm run build
+```
+This bundles the React client into `dist/` and builds the Express server into `dist/server.cjs`.
+
+### Running in Production (Node.js Server)
+```bash
+node dist/server.cjs
+```
+
+### Deploying Backend (Docker / Render / Railway / AWS EC2)
+Use the provided `Dockerfile` or deploy directly:
 ```bash
 cd backend
-pytest tests -v
+uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 4
 ```
 
-Run the complete end-to-end integration test:
-```bash
-python test_complete_platform.py
-```
+### Environment Security Checklist
+- Set `USE_MOCK_AI=false` in production.
+- Ensure `SUPABASE_SERVICE_ROLE_KEY` and `GEMINI_API_KEY` are kept strictly in backend environment secrets and never bundled in client builds.
+- Configure CORS origins in `backend/app/main.py` to match your production domain.
 
 ---
 
-## 🔒 13. Security & Third-Party Disclosures
+## 16. Known Limitations
 
-- **Google Gemini API**: Utilized exclusively for LLM orchestration (`gemini-2.5-flash`) and vector embeddings (`text-embedding-004`). No student data is used to train foundation models.
-- **Supabase PostgreSQL**: Enforces Row Level Security (RLS) on all tables; cross-user document retrieval is strictly prevented at the database engine level via `auth.uid()` and `match_document_chunks` user filtering.
-- **Zero Client-Side Secret Leakage**: All API keys (`GEMINI_API_KEY`, `SUPABASE_SERVICE_ROLE_KEY`) are kept exclusively on the FastAPI backend; the frontend communicates via secure JWT session tokens.
+1. **Browser Speech Voice Availability**: The Web Speech API depends on the voices installed on the student's operating system. On some Linux distributions, high-quality multilingual neural voices (e.g. native Telugu or Hindi) may require installing additional TTS voice packs.
+2. **Document File Size Limits**: Ingestion is currently optimized for documents under 50MB and 200 pages. For massive textbooks (1,000+ pages), background chunking should be executed via a dedicated worker queue (e.g., Celery/Redis).
+3. **Gemini Free-Tier Rate Limits**: When using Google AI Studio free-tier API keys, Google enforces a limit of 15 requests per minute. EduMitra includes automated retry and backoff logic, but high concurrent usage requires a paid billing tier.
 
 ---
 
-## 📄 14. License
+## 17. Judge Demo Mode Walkthrough
+
+For hackathon judges evaluating EduMitra, a 1-click turnkey demo mode is integrated directly into the application:
+
+1. **Launch**: Click the prominent **"Judge Demo Mode"** button on the Landing Page hero or navigation bar.
+2. **Automated Document Ingestion**: Seeds a physics curriculum document (*"Chapter 4: Electric Current, Voltage & Ohm's Law"*), extracts text, generates 768-dim embeddings, and stores them in `pgvector`.
+3. **Personalization Setup**: Sets profile to *Beginner*, *Hinglish*, *20 Minutes*, *Analogy-Driven Style*.
+4. **Structured Curriculum**: Displays the 5-step curriculum generated by Gemini.
+5. **Interactive Circuit Simulation**: Opens the live **Circuit Simulator** visualizer. Adjust the battery voltage (12V) and resistance (20Ω) sliders to inspect real-time current readout ($I = 0.6A$).
+6. **Formative Question**: Teacher pauses playback and asks: *"If voltage stays constant at 12V and resistance increases from 10Ω to 20Ω, what happens to current?"*
+7. **Intentional Misconception Test**: Type or select the deliberate incorrect answer: *"Current increases because there is more resistance."*
+8. **Cognitive Remediation in Action**: EduMitra immediately diagnoses the inverse-proportionality fallacy, switches to the **Water-Pipe constriction analogy**, explains why resistance opposes flow, and presents a simplified single-variable retry question.
+9. **Mastery Elevation**: Submit the correct answer (*"Current decreases"*). EduMitra elevates mastery status and progresses to the next section.
+10. **Learning Dashboard**: Inspect the final assessment breakdown with formative scores, identified misconceptions, spaced repetition flashcards, interactive concept map, and next topic recommendations.
+
+---
+
+## 📄 License
 
 Distributed under the MIT License. Developed with pride for the AI Innovation Hackathon.
