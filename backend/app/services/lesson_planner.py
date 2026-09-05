@@ -22,7 +22,16 @@ def generate_personalized_lesson_plan(
     # Adapt number of steps based on duration
     step_count = 3 if duration in ["5m", "5_min"] else 4 if duration in ["10m", "10_min"] else 5 if duration in ["20m", "20_min"] else 6
     
-    doc_context = f"\nUser Uploaded Document Excerpt:\n{document_text[:4000]}" if document_text else ""
+    if document_text:
+        doc_context = f"""
+STRICT GROUNDING DIRECTIVE (FOLLOW STUDENT DATA ONLY):
+The student has uploaded the following study notes/material. You MUST structure the lesson, definitions, formulas, and explanations EXCLUSIVELY from this text. Do NOT hallucinate concepts or topics outside this provided material:
+
+Student Uploaded Material:
+{document_text[:6000]}
+"""
+    else:
+        doc_context = ""
     
     prompt = f"""
 You are EduMitra, a world-class personal AI teacher.
@@ -74,6 +83,7 @@ Return a strictly valid JSON object matching this schema:
       "dialogueTranslations": {{
         "hi": "Hindi translation of dialogue...",
         "hinglish": "Hinglish translation...",
+        "te": "Telugu translation of dialogue...",
         "en": "English translation..."
       }},
       "visualType": "chosen_visual_type",
@@ -164,7 +174,9 @@ Return a strictly valid JSON object matching this schema:
                     "teacherDialogue": f"Welcome! Today we will understand {topic} from first principles with interactive visual models.",
                     "dialogueTranslations": {
                         "en": f"Welcome! Today we will understand {topic} from first principles.",
-                        "hinglish": f"Hello! Aaj hum {topic} ko deeply samajhenge visual models ke through."
+                        "hi": f"नमस्ते! आज हम {topic} को बुनियादी सिद्धांतों और विजुअल्स के साथ समझेंगे।",
+                        "hinglish": f"Hello! Aaj hum {topic} ko deeply samajhenge visual models ke through.",
+                        "te": f"స్వాగతం! ఈ రోజు మనం {topic} గురించి ప్రాథమిక సూత్రాలతో నేర్చుకుందాం."
                     },
                     "visualType": planned_vis["visual_type"],
                     "visualData": planned_vis["visual_data"]
@@ -178,7 +190,9 @@ Return a strictly valid JSON object matching this schema:
                     "teacherDialogue": f"Notice how the variables interact dynamically. Let's observe the behavior step by step.",
                     "dialogueTranslations": {
                         "en": f"Notice how the variables interact dynamically. Let's observe the behavior step by step.",
-                        "hinglish": f"Dhyan se dekhiye kaise components react karte hain real-time mein."
+                        "hi": f"ध्यान से देखिए कि घटक कैसे परस्पर क्रिया करते हैं। आइए इसे चरण-दर-चरण समझें।",
+                        "hinglish": f"Dhyan se dekhiye kaise components react karte hain real-time mein.",
+                        "te": f"భాగాలు ఎలా పనిచేస్తాయో గమనించండి. దశలవారీగా చూద్దాం."
                     },
                     "visualType": planned_vis["visual_type"],
                     "visualData": planned_vis["visual_data"]
@@ -192,7 +206,9 @@ Return a strictly valid JSON object matching this schema:
                     "teacherDialogue": f"Now let's test your understanding with a quick checkpoint before moving forward.",
                     "dialogueTranslations": {
                         "en": f"Now let's test your understanding with a quick checkpoint before moving forward.",
-                        "hinglish": f"Ab ek quick question se check karte hain aapka concept kitna clear hua."
+                        "hi": f"आगे बढ़ने से पहले आइए एक त्वरित प्रश्न के साथ अपनी समझ की जाँच करें।",
+                        "hinglish": f"Ab ek quick question se check karte hain aapka concept kitna clear hua.",
+                        "te": f"ముందుకు వెళ్ళే ముందు మీ అవగాహనను పరీక్షిద్దాం."
                     },
                     "visualType": planned_vis["visual_type"],
                     "visualData": planned_vis["visual_data"],

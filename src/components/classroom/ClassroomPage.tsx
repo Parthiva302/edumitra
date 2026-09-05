@@ -57,7 +57,8 @@ export const ClassroomPage: React.FC<ClassroomPageProps> = ({
       narrationTranslations: {
         en: `Welcome! Today we will explore ${lessonPlan.title} step by step.`,
         hi: `नमस्ते! आज हम ${lessonPlan.title} को आसान तरीके से विजुअल्स के साथ समझेंगे।`,
-        hinglish: `Welcome! Aaj hum ${lessonPlan.title} ko step-by-step visual models ke sath samjhenge.`
+        hinglish: `Welcome! Aaj hum ${lessonPlan.title} ko step-by-step visual models ke sath samjhenge.`,
+        te: `స్వాగతం! ఈ రోజు మనం ${lessonPlan.title} గురించి ఇంటరాక్టివ్ విజువల్ మోడల్స్‌తో వివరంగా నేర్చుకుందాం.`
       },
       teacher_action: 'welcoming_gesture',
       camera_direction: 'medium shot, frontal camera',
@@ -87,7 +88,8 @@ export const ClassroomPage: React.FC<ClassroomPageProps> = ({
         narrationTranslations: {
           en: `Observe the visual model for ${st.concept}. Let's trace how the fundamental components behave.`,
           hi: `${st.concept} के इस विजुअल मॉडल को ध्यान से देखिए।`,
-          hinglish: `Dhyan se dekhiye: ${st.concept} ka visual model kaise react karta hai.`
+          hinglish: `Dhyan se dekhiye: ${st.concept} ka visual model kaise react karta hai.`,
+          te: `${st.concept} యొక్క విజువల్ మోడల్‌ను గమనించండి. భాగాలు ఎలా పనిచేస్తాయో చూద్దాం.`
         },
         teacher_action: 'points_right',
         camera_direction: 'split screen: teacher on left, visual model on right',
@@ -130,7 +132,8 @@ export const ClassroomPage: React.FC<ClassroomPageProps> = ({
           narrationTranslations: {
             en: `Now let's check your understanding. ${st.quickCheck.question}`,
             hi: `आइए अपनी समझ को परखते हैं: ${st.quickCheck.question}`,
-            hinglish: `Chaliye ab aapki understanding check karte hain: ${st.quickCheck.question}`
+            hinglish: `Chaliye ab aapki understanding check karte hain: ${st.quickCheck.question}`,
+            te: `ఇప్పుడు మీ అవగాహనను పరీక్షిద్దాం: ${st.quickCheck.question}`
           },
           teacher_action: 'attentive_listening',
           camera_direction: 'medium close-up with interactive option overlay',
@@ -155,7 +158,8 @@ export const ClassroomPage: React.FC<ClassroomPageProps> = ({
       narrationTranslations: {
         en: `Outstanding effort! You have grasped the foundational concepts of ${lessonPlan.title}. Let's proceed to the assessment.`,
         hi: `शानदार! आपने ${lessonPlan.title} के मुख्य सिद्धांतों को बहुत अच्छे से समझ लिया है।`,
-        hinglish: `Bahut badiya! Aapne ${lessonPlan.title} ke core concepts master kar liye hain.`
+        hinglish: `Bahut badiya! Aapne ${lessonPlan.title} ke core concepts master kar liye hain.`,
+        te: `చాలా బాగుంది! మీరు ${lessonPlan.title} యొక్క ప్రాథమిక భావనలను నేర్చుకున్నారు. అసెస్‌మెంట్‌కి వెళ్దాం.`
       },
       teacher_action: 'encouraging_smile',
       camera_direction: 'medium shot, centered',
@@ -257,7 +261,7 @@ export const ClassroomPage: React.FC<ClassroomPageProps> = ({
       speechService.stop();
       if (autoAdvanceTimerRef.current) clearTimeout(autoAdvanceTimerRef.current);
     };
-  }, [currentSceneIndex, currentLanguage, autoAdvanceEnabled]);
+  }, [currentSceneIndex, currentLanguage, autoAdvanceEnabled, selectedAvatarId]);
 
   const triggerSpeech = (text: string, onFinish?: () => void) => {
     if (isMuted) {
@@ -273,6 +277,7 @@ export const ClassroomPage: React.FC<ClassroomPageProps> = ({
       lang: currentLanguage === 'hi' ? 'hi' : currentLanguage === 'te' ? 'te' : currentLanguage === 'hinglish' ? 'hinglish' : 'en',
       rate: playbackSpeed,
       voiceType: teacherPersona.voiceType,
+      teacherId: teacherPersona.id,
       onStart: () => {
         setIsSpeaking(true);
         setAvatarState('speaking');

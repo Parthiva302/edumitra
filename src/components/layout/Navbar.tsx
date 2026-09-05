@@ -15,8 +15,11 @@ import {
   Sliders,
   LogOut,
   ChevronDown,
-  Sparkles
+  Sparkles,
+  Sun,
+  Moon
 } from 'lucide-react';
+import { getInitialTheme, toggleTheme, subscribeTheme, ThemeMode } from '../../utils/theme';
 
 interface NavbarProps {
   currentScreen: AppScreen;
@@ -39,7 +42,12 @@ export const Navbar: React.FC<NavbarProps> = ({
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
+  const [themeState, setThemeState] = useState<ThemeMode>(getInitialTheme());
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    return subscribeTheme((newTheme) => setThemeState(newTheme));
+  }, []);
 
   const navItems = [
     { id: 'dashboard' as AppScreen, label: 'Dashboard', icon: Home },
@@ -172,6 +180,21 @@ export const Navbar: React.FC<NavbarProps> = ({
           >
             <Plus className="w-3.5 h-3.5 text-white" />
             <span className="hidden sm:inline">New Lesson</span>
+          </button>
+
+          {/* Theme Toggle Button (Dark / Light Mode) */}
+          <button
+            id="navbar-theme-toggle-btn"
+            onClick={() => toggleTheme()}
+            className="p-1.5 rounded-lg text-[#61707C] hover:text-[#17232D] hover:bg-[#F3F7FA] border border-[#DCE4EC] transition-all duration-150 cursor-pointer flex items-center justify-center"
+            title={`Switch to ${themeState === 'dark' ? 'Light' : 'Dark'} Mode`}
+            aria-label="Toggle dark / light mode"
+          >
+            {themeState === 'dark' ? (
+              <Sun className="w-4 h-4 text-amber-400" />
+            ) : (
+              <Moon className="w-4 h-4 text-[#4F7CAC]" />
+            )}
           </button>
 
           {/* Subtle Vertical Divider */}

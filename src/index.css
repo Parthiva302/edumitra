@@ -16,6 +16,59 @@
     --accent-secondary: #78A6C8;
   }
 
+  html.dark, :root.dark {
+    --canvas-bg: #0F172A;
+    --card-bg: #1E293B;
+    --surface-subtle: #1E293B;
+    --surface-soft: #334155;
+    --text-primary: #F8FAFC;
+    --text-secondary: #CBD5E1;
+    --text-muted: #94A3B8;
+    --border-subtle: #334155;
+    --border-strong: #475569;
+    --accent: #60A5FA;
+    --accent-hover: #3B82F6;
+    --accent-secondary: #93C5FD;
+  }
+
+  html.dark body {
+    background-color: var(--canvas-bg);
+    color: var(--text-primary);
+  }
+
+  html.dark .bg-white {
+    background-color: #1E293B !important;
+  }
+
+  html.dark .bg-\[\#F5F7F8\], html.dark .bg-\[\#F9FAFB\], html.dark .bg-slate-50, html.dark .bg-gray-50 {
+    background-color: #0F172A !important;
+  }
+
+  html.dark .bg-\[\#F3F7FA\], html.dark .bg-\[\#F8FAFC\], html.dark .bg-slate-100 {
+    background-color: #1E293B !important;
+  }
+
+  html.dark .text-\[\#17232D\], html.dark .text-slate-900, html.dark .text-gray-900 {
+    color: #F8FAFC !important;
+  }
+
+  html.dark .text-\[\#61707C\], html.dark .text-slate-600, html.dark .text-gray-600 {
+    color: #94A3B8 !important;
+  }
+
+  html.dark .border-\[\#DCE4EC\], html.dark .border-\[\#E2E8F0\], html.dark .border-slate-200, html.dark .border-gray-200 {
+    border-color: #334155 !important;
+  }
+
+  html.dark .border-\[\#CBD6E2\], html.dark .border-slate-300 {
+    border-color: #475569 !important;
+  }
+
+  html.dark header {
+    background-color: rgba(30, 41, 59, 0.95) !important;
+    border-color: #334155 !important;
+  }
+
   html {
     scroll-behavior: smooth;
     scroll-padding-top: 5rem;

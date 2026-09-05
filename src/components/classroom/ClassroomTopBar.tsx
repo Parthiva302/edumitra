@@ -1,6 +1,7 @@
-import React from 'react';
-import { ArrowLeft, Globe, Film } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { ArrowLeft, Globe, Film, Sun, Moon } from 'lucide-react';
 import { LanguageCode } from '../../types';
+import { getInitialTheme, toggleTheme, subscribeTheme, ThemeMode } from '../../utils/theme';
 
 interface ClassroomTopBarProps {
   lessonTitle: string;
@@ -29,6 +30,12 @@ export const ClassroomTopBar: React.FC<ClassroomTopBarProps> = ({
   onLanguageChange,
   onExit
 }) => {
+  const [themeState, setThemeState] = useState<ThemeMode>(getInitialTheme());
+
+  useEffect(() => {
+    return subscribeTheme((newTheme) => setThemeState(newTheme));
+  }, []);
+
   const languages: { code: LanguageCode; label: string }[] = [
     { code: 'hinglish', label: 'Hinglish (Hindi + English)' },
     { code: 'en', label: 'English' },
@@ -119,6 +126,21 @@ export const ClassroomTopBar: React.FC<ClassroomTopBarProps> = ({
             </select>
           </div>
         </div>
+
+        {/* Dark / Light Mode Toggle Button */}
+        <button
+          id="classroom-theme-toggle-btn"
+          onClick={() => toggleTheme()}
+          className="p-1.5 rounded-lg text-[#61707C] hover:text-[#17232D] hover:bg-[#F3F7FA] border border-[#DCE4EC] transition-colors cursor-pointer flex items-center justify-center shadow-xs"
+          title={`Switch to ${themeState === 'dark' ? 'Light' : 'Dark'} Mode`}
+          aria-label="Toggle dark / light mode"
+        >
+          {themeState === 'dark' ? (
+            <Sun className="w-4 h-4 text-amber-400" />
+          ) : (
+            <Moon className="w-4 h-4 text-[#4F7CAC]" />
+          )}
+        </button>
       </div>
     </header>
   );

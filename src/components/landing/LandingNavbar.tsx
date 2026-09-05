@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { GraduationCap, Menu, X, ArrowRight } from 'lucide-react';
+import { GraduationCap, Menu, X, ArrowRight, Sun, Moon } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
+import { getInitialTheme, toggleTheme, subscribeTheme, ThemeMode } from '../../utils/theme';
 
 interface LandingNavbarProps {
   onNavigateLogin: () => void;
@@ -17,6 +18,11 @@ export const LandingNavbar: React.FC<LandingNavbarProps> = ({
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string>('hero');
+  const [themeState, setThemeState] = useState<ThemeMode>(getInitialTheme());
+
+  useEffect(() => {
+    return subscribeTheme((newTheme) => setThemeState(newTheme));
+  }, []);
 
   // Track active section on scroll for subtle indicator
   useEffect(() => {
@@ -136,6 +142,21 @@ export const LandingNavbar: React.FC<LandingNavbarProps> = ({
               <span>Judge Demo Mode</span>
             </button>
           )}
+
+          {/* Dark / Light Mode Toggle Button */}
+          <button
+            id="landing-navbar-theme-toggle-btn"
+            onClick={() => toggleTheme()}
+            className="p-1.5 rounded-lg text-[#647481] hover:text-[#17232D] hover:bg-[#F3F7FA] border border-[#DCE4EC] transition-all duration-200 cursor-pointer flex items-center justify-center"
+            title={`Switch to ${themeState === 'dark' ? 'Light' : 'Dark'} Mode`}
+            aria-label="Toggle dark / light mode"
+          >
+            {themeState === 'dark' ? (
+              <Sun className="w-4 h-4 text-amber-400" />
+            ) : (
+              <Moon className="w-4 h-4 text-[#4F7CAC]" />
+            )}
+          </button>
 
           <button
             id="landing-navbar-login-btn"
