@@ -1,0 +1,7 @@
+{
+  "name": "EduMitra",
+  "description": "Your Personal AI Teacher — Learn from your own materials or any topic with adaptive, interactive, photorealistic virtual teaching.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+

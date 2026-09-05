@@ -1,0 +1,514 @@
+{
+  "users": {
+    "usr_1788427579062_e338384d": {
+      "id": "usr_1788427579062_e338384d",
+      "name": "Parthiva Aneesh",
+      "email": "parthivaaneesh@gmail.com",
+      "passwordHash": "9170c76a6785345b03ecd447828db663f47c87f0181544b337af855886a24afbbf5dfcbd7408825d4709304b8dfc3376afd4afc404777d27477bb6eec90724ea",
+      "salt": "fe4133d2bb6d032a74c21db591007dca",
+      "createdAt": "2026-09-03T09:26:19.069Z"
+    }
+  },
+  "emailToId": {
+    "parthivaaneesh@gmail.com": "usr_1788427579062_e338384d"
+  },
+  "userData": {
+    "usr_1788427579062_e338384d": {
+      "profile": {
+        "name": "Parthiva Aneesh",
+        "email": "parthivaaneesh@gmail.com",
+        "level": "beginner",
+        "preferredLanguage": "hinglish",
+        "selectedAvatar": "priya",
+        "overallMastery": 0,
+        "completedLessons": 0,
+        "learningTimeHours": 0,
+        "masteredConceptsCount": 0,
+        "recentLessons": [],
+        "voiceSpeed": 1,
+        "captionsEnabled": true,
+        "soundEnabled": true,
+        "learningStreak": 0,
+        "questionsAnswered": 0,
+        "educationLevel": "high_school",
+        "learningGoal": "understand_concept",
+        "teachingStyle": "simple_visual"
+      },
+      "inProgressLesson": {
+        "id": "lesson_physics_electricity_01",
+        "title": "postman notes-1-10",
+        "subject": "Custom Subject",
+        "category": "Physics & Electrical Circuits",
+        "level": "intermediate",
+        "language": "en",
+        "duration": "20m",
+        "currentStepIndex": 1,
+        "totalSteps": 7,
+        "currentConcept": "Voltage & Potential",
+        "progressPercentage": 29,
+        "updatedAt": "2026-09-03T09:31:59.170Z",
+        "steps": [
+          {
+            "id": "step_1_current",
+            "stepNumber": "01",
+            "title": "Current (I) — Flow of Charge",
+            "concept": "Electric Current",
+            "estimatedMinutes": 3,
+            "teacherDialogue": "Welcome to today's session! Let's understand Electric Current. Imagine a river where water molecules flow. In a wire, Electric Current is simply the rate of flow of electric charges (electrons) through any cross-section per second. It is measured in Amperes (A), where 1 Ampere equals 1 Coulomb of charge flowing per second.",
+            "dialogueTranslations": {
+              "en": "Welcome! Let's understand Electric Current. Electric current is the rate of flow of electric charges (electrons) through a conductor per unit time, measured in Amperes (A).",
+              "hi": "नमस्ते! आज हम विद्युत धारा (Electric Current) समझेंगे। विद्युत धारा किसी चालक में प्रति सेकंड प्रवाहित होने वाले आवेश की दर है, जिसे एम्पीयर (A) में मापा जाता है।",
+              "hinglish": "Namaste! Aaj hum Electric Current samjhenge. Jaise river mein paani flow karta hai, waise hi conductor wire ke andar charges (electrons) ka flow hona Electric Current kehlata hai. Iski unit Amperes (A) hoti hai.",
+              "te": "స్వాగతం! ఈ రోజు మనం విద్యుత్ ప్రవాహం (Electric Current) గురించి నేర్చుకుందాం. ఒక వాహకం గుండా ప్రతి సెకనుకు ప్రవహించే ఆవేశాల రేటును కరెంట్ అంటారు."
+            },
+            "subtitles": [
+              {
+                "text": "Welcome! Today we will master Electric Current and Ohm's Law.",
+                "start": 0,
+                "end": 3.5
+              },
+              {
+                "text": "Electric current is the continuous flow of charges (electrons) through a wire.",
+                "start": 3.6,
+                "end": 7.2
+              },
+              {
+                "text": "It is measured in Amperes (A) where I = Q / t (Coulombs per second).",
+                "start": 7.3,
+                "end": 11
+              }
+            ],
+            "visualType": "concept_card",
+            "visualData": {
+              "title": "Electric Current (I)",
+              "formula": "I = \\frac{Q}{t}",
+              "unit": "Amperes (A) = Coulombs / second",
+              "points": [
+                "Direction of conventional current is positive to negative terminal.",
+                "Actual electron flow is from negative to positive.",
+                "1 Ampere = 6.24 × 10¹⁸ electrons passing through a cross-section per second."
+              ],
+              "particleCount": 18,
+              "chargeType": "negative"
+            }
+          },
+          {
+            "id": "step_2_voltage",
+            "stepNumber": "02",
+            "title": "Voltage (V) — Electrical Potential Difference",
+            "concept": "Voltage & Potential",
+            "estimatedMinutes": 3,
+            "teacherDialogue": "Now, why do electrons move at all? Because of Voltage! Think of Voltage as the electrical 'pressure' or push provided by a battery. It is the work done to move a unit positive charge between two points in a circuit. Without voltage, electrons just jiggle randomly without net flow.",
+            "dialogueTranslations": {
+              "en": "Why do charges flow? Because of Voltage (Electric Potential Difference). It acts as the electrical pressure pushing electrons through the circuit, measured in Volts (V).",
+              "hi": "आवेश प्रवाहित क्यों होते हैं? वोल्टेज के कारण! वोल्टेज वह विद्युत दबाव (Electrical Pressure) है जो इलेक्ट्रॉनों को परिपथ में धकेलता है। इसे वोल्ट (V) में मापा जाता है।",
+              "hinglish": "Charges flow kyun karte hain? Voltage ki wajah se! Battery ek electrical 'pressure' ya pump ki tarah kaam karti hai jo electrons ko aage dhakelti hai. Isko Volts (V) mein measure karte hain.",
+              "te": "ఛార్జీలు ఎందుకు ప్రవహిస్తాయి? వోల్టేజ్ వల్ల! వోల్టేజ్ అనేది ఎలక్ట్రాన్లను నెట్టే విద్యుత్ పీడనం."
+            },
+            "subtitles": [
+              {
+                "text": "Why do charges flow? Because of Voltage (Potential Difference).",
+                "start": 0,
+                "end": 3.2
+              },
+              {
+                "text": "Voltage is the electrical pressure created by a battery or power source.",
+                "start": 3.3,
+                "end": 7
+              },
+              {
+                "text": "Formula: V = W / Q (Joules per Coulomb = Volts).",
+                "start": 7.1,
+                "end": 10.5
+              }
+            ],
+            "visualType": "concept_card",
+            "visualData": {
+              "title": "Voltage / Potential Difference (V)",
+              "formula": "V = \\frac{W}{Q}",
+              "unit": "Volts (V) = Joules / Coulomb",
+              "points": [
+                "Creates the electric field inside conductors.",
+                "Supplied by batteries, generators, or power supplies.",
+                "Higher voltage creates a stronger push on electrons."
+              ],
+              "batteryVoltage": 9
+            }
+          },
+          {
+            "id": "step_3_resistance",
+            "stepNumber": "03",
+            "title": "Resistance (R) — Opposition to Flow",
+            "concept": "Electrical Resistance",
+            "estimatedMinutes": 3,
+            "teacherDialogue": "Every conductor isn't completely open. As electrons travel, they bump into metal atoms! This obstruction or opposition to current flow is called Resistance (R). It is measured in Ohms (Ω). High resistance means it is harder for current to pass.",
+            "dialogueTranslations": {
+              "en": "As electrons travel, they collide with atoms. This opposition to current flow is Resistance (R), measured in Ohms (Ω).",
+              "hi": "जब इलेक्ट्रॉन तार में चलते हैं, तो वे परमाणुओं से टकराते हैं। धारा के मार्ग में आने वाली इस रुकावट को प्रतिरोध (Resistance) कहते हैं, जिसे ओम (Ω) में मापा जाता है।",
+              "hinglish": "Jaise electrons wire mein chalte hain, wo metal atoms se takrate hain. Is friction ya rukawat ko Resistance (R) kehte hain, aur iska unit Ohms (Ω) hota hai.",
+              "te": "ఎలక్ట్రాన్లు ప్రయాణించేటప్పుడు పరమాణువులతో ఢీకొంటాయి. ఈ ఆటంకాన్ని నిరోధం (Resistance) అంటారు."
+            },
+            "subtitles": [
+              {
+                "text": "As electrons move, they collide with atomic lattice ions.",
+                "start": 0,
+                "end": 3.5
+              },
+              {
+                "text": "This opposition to current is called Electrical Resistance (R).",
+                "start": 3.6,
+                "end": 7.2
+              },
+              {
+                "text": "Measured in Ohms (Ω). Higher resistance reduces electron flow.",
+                "start": 7.3,
+                "end": 11
+              }
+            ],
+            "visualType": "concept_card",
+            "visualData": {
+              "title": "Resistance (R)",
+              "formula": "R = \\rho \\frac{L}{A}",
+              "unit": "Ohms (\\Omega)",
+              "points": [
+                "Proportional to length (L) of the wire.",
+                "Inversely proportional to cross-sectional area (A).",
+                "Depends on the resistivity (ρ) and temperature of the material."
+              ]
+            }
+          },
+          {
+            "id": "step_4_ohms_law",
+            "stepNumber": "04",
+            "title": "Ohm’s Law — Connecting V, I, and R",
+            "concept": "Ohm’s Law Formula",
+            "estimatedMinutes": 4,
+            "teacherDialogue": "Now let's bring all three together in Georg Ohm's monumental law: V = I × R. At a constant temperature, Current (I) through a conductor is directly proportional to Voltage (V) and inversely proportional to Resistance (R). Let's experiment with our interactive circuit simulation on the right!",
+            "dialogueTranslations": {
+              "en": "Georg Ohm's law connects all three: V = I × R. Current is directly proportional to Voltage and inversely proportional to Resistance. Adjust the controls to see it in action!",
+              "hi": "जॉर्ज ओम का नियम इन तीनों को जोड़ता है: V = I × R। धारा वोल्टेज के समानुपाती और प्रतिरोध के व्युत्क्रमानुपाती होती है।",
+              "hinglish": "Georg Ohm ne in teeno ko relate kiya: V = I × R ya I = V / R. Agar voltage badhaoge toh current badhega, par agar resistance badhaoge toh current ghatega. Right side ke circuit mein sliders adjust karke dekho!",
+              "te": "ఓమ్ నియమం ప్రకారం: V = I × R. కరెంట్ అనేది వోల్టేజ్‌కు అనులోమానుపాతంలోను, నిరోధానికి విలోమానుపాతంలోను ఉంటుంది."
+            },
+            "subtitles": [
+              {
+                "text": "Georg Ohm proved the mathematical relation: V = I × R.",
+                "start": 0,
+                "end": 3.8
+              },
+              {
+                "text": "Therefore: Current I = V / R, and Resistance R = V / I.",
+                "start": 3.9,
+                "end": 7.5
+              },
+              {
+                "text": "Use the live interactive circuit controls on the right to test different values.",
+                "start": 7.6,
+                "end": 12
+              }
+            ],
+            "visualType": "circuit_simulation",
+            "visualData": {
+              "initialVoltage": 9,
+              "initialResistance": 15,
+              "bulbMaxResistance": 50,
+              "showCurrentFlow": true
+            }
+          },
+          {
+            "id": "step_5_quick_check",
+            "stepNumber": "05",
+            "title": "Interactive Quick Check & Adaptation",
+            "concept": "Understanding Check",
+            "estimatedMinutes": 3,
+            "teacherDialogue": "Let's pause here for a quick conceptual check! Look at the question on your screen: If resistance increases while voltage remains constant, what happens to the current?",
+            "dialogueTranslations": {
+              "en": "Let's pause for a quick check: If resistance increases while voltage remains constant, what happens to the current?",
+              "hi": "आइए एक त्वरित प्रश्न हल करें: यदि वोल्टेज स्थिर रहे और प्रतिरोध बढ़ जाए, तो विद्युत धारा (Current) पर क्या प्रभाव पड़ेगा?",
+              "hinglish": "Chalo ek quick check karte hain: Agar voltage constant rahe aur resistance badha di jaye, toh current ka kya hoga?",
+              "te": "ఒక ప్రశ్న: వోల్టేజ్ స్థిరంగా ఉండి, నిరోధం పెరిగితే కరెంట్ ఏమవుతుంది?"
+            },
+            "subtitles": [
+              {
+                "text": "Let's test your understanding with a quick conceptual check.",
+                "start": 0,
+                "end": 3.5
+              },
+              {
+                "text": "Select your answer on screen. I'll evaluate and guide you accordingly.",
+                "start": 3.6,
+                "end": 7.2
+              }
+            ],
+            "visualType": "circuit_simulation",
+            "visualData": {
+              "initialVoltage": 12,
+              "initialResistance": 20
+            },
+            "quickCheck": {
+              "id": "qc_ohms_01",
+              "question": "If resistance increases while voltage remains constant, what happens to current?",
+              "options": [
+                {
+                  "id": "opt_1",
+                  "text": "It increases",
+                  "isCorrect": false,
+                  "misconceptionExplanation": "Misconception detected: You may be thinking current and resistance are directly proportional (increasing together), whereas resistance represents an obstruction that impedes flow."
+                },
+                {
+                  "id": "opt_2",
+                  "text": "It decreases",
+                  "isCorrect": true
+                },
+                {
+                  "id": "opt_3",
+                  "text": "It stays the same",
+                  "isCorrect": false,
+                  "misconceptionExplanation": "Misconception: Resistance directly alters the ease of electron flow. Constant voltage with more obstruction must change the current."
+                },
+                {
+                  "id": "opt_4",
+                  "text": "I'm not sure",
+                  "isCorrect": false,
+                  "misconceptionExplanation": "No worries! Let's build the intuition with a simple real-world analogy."
+                }
+              ],
+              "remediationMisconceptionIdentified": "Student thought Current and Resistance are directly proportional or independent.",
+              "remediationAnalogy": "Think of current like water flowing through a pipe. Voltage is the water pump pressure. Resistance is like a valve tightening or sand clogging the pipe. If the pump pressure (voltage) stays constant, but the pipe gets narrower and harder to flow through (higher resistance), less water (current) passes through per second!",
+              "remediationDialogue": "You're close! Let's look at this differently with our Water Pipe Analogy. Imagine water being pumped through a hose. Voltage is the pump pressure, current is the water flow rate, and resistance is like squeezing the pipe. If you squeeze the pipe tighter (more resistance), naturally less water flows through! That's why I = V / R means higher resistance reduces current.",
+              "remediationVisualType": "water_pipe_analogy",
+              "remediationVisualData": {
+                "pipeWidth": "narrow",
+                "pumpPressure": "constant (12V)",
+                "valveTightness": "high (40Ω)",
+                "flowRate": "low (0.3A)"
+              },
+              "remediationRetryQuestion": {
+                "question": "Now, using our pipe analogy: If a 12V battery is connected and we DOUBLE the resistance from 10Ω to 20Ω, the current will:",
+                "options": [
+                  {
+                    "id": "retry_1",
+                    "text": "Be cut in half (Decrease by 50%)",
+                    "isCorrect": true
+                  },
+                  {
+                    "id": "retry_2",
+                    "text": "Double (Increase by 100%)",
+                    "isCorrect": false
+                  },
+                  {
+                    "id": "retry_3",
+                    "text": "Remain unchanged",
+                    "isCorrect": false
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "id": "step_6_applications",
+            "stepNumber": "06",
+            "title": "Real-World Applications of Ohm’s Law",
+            "concept": "Practical Application",
+            "estimatedMinutes": 2,
+            "teacherDialogue": "Ohm's Law powers modern electronics! For example, when you turn a light dimmer knob, you are changing a variable resistor (potentiometer), which changes the current and controls bulb brightness. Fuses in your house use high resistance thin wires that melt safely if current exceeds safety limits.",
+            "dialogueTranslations": {
+              "en": "Ohm's Law powers everyday devices: dimmer switches, toaster heating elements, fuses, and smartphone charging circuits.",
+              "hi": "ओम का नियम हमारे दैनिक उपकरणों में काम करता है: डिमर स्विच, हीटर, फ्यूज और मोबाइल चार्जर।",
+              "hinglish": "Ohm's Law everyday devices mein use hota hai jaise fan regulator, light dimmer, toaster ke heating coils aur fuse wires.",
+              "te": "ఓమ్ నియమం ఫ్యాన్ రెగ్యులేటర్లు, హీటర్లు మరియు స్మార్ట్‌ఫోన్ ఛార్జర్లలో ఉపయోగించబడుతుంది."
+            },
+            "subtitles": [
+              {
+                "text": "Everyday applications: Light dimmers, fan speed regulators, and electric heaters.",
+                "start": 0,
+                "end": 4
+              },
+              {
+                "text": "Fuses use calibrated resistance to protect circuits from high current spikes.",
+                "start": 4.1,
+                "end": 8
+              }
+            ],
+            "visualType": "concept_card",
+            "visualData": {
+              "title": "Real-World Engineering Examples",
+              "points": [
+                "💡 Light Dimmer (Potentiometer): Increases resistance → reduces current → dims the lamp.",
+                "🔥 Electric Toaster (Nichrome wire): High resistance generates heat (P = I²R).",
+                "🛡️ Safety Fuse: Protects home appliances from high current overloads."
+              ]
+            }
+          },
+          {
+            "id": "step_7_summary",
+            "stepNumber": "07",
+            "title": "Lesson Recap & Transition to Assessment",
+            "concept": "Mastery Summary",
+            "estimatedMinutes": 2,
+            "teacherDialogue": "Fantastic effort! You've learned how Current (I), Voltage (V), and Resistance (R) interact through V = I × R, and how to troubleshoot electrical circuits. You are now ready for the final assessment!",
+            "dialogueTranslations": {
+              "en": "Excellent work! You have mastered the relationship V = I × R. Let's move to your personalized assessment to evaluate your score.",
+              "hi": "शानदार काम! आपने V = I × R का संबंध पूरी तरह समझ लिया है। अब आइए आपका मूल्यांकन (Assessment) शुरू करें।",
+              "hinglish": "Shabaash! Aapne Current, Voltage aur Resistance ka relationship V = I × R ache se samajh liya. Chalo ab final assessment start karte hain!",
+              "te": "చాలా బాగుంది! మీరు V = I × R సంబంధాన్ని నేర్చుకున్నారు. ఇప్పుడు అసెస్‌మెంట్‌ను ప్రారంభిద్దాం."
+            },
+            "subtitles": [
+              {
+                "text": "Congratulations on completing the core teaching modules!",
+                "start": 0,
+                "end": 3.5
+              },
+              {
+                "text": "Click 'Start Assessment' when ready to test your mastery.",
+                "start": 3.6,
+                "end": 7
+              }
+            ],
+            "visualType": "concept_card",
+            "visualData": {
+              "title": "Core Takeaways",
+              "points": [
+                "Current (I) = Flow rate of charges in Amperes (A)",
+                "Voltage (V) = Electrical push/potential difference in Volts (V)",
+                "Resistance (R) = Obstruction to charge flow in Ohms (Ω)",
+                "Formula: V = I × R,  I = V / R,  R = V / I"
+              ]
+            }
+          }
+        ]
+      },
+      "documents": [
+        {
+          "id": "mat_1788427724935",
+          "name": "postman notes-1-10.pdf",
+          "size": "0.37 MB",
+          "type": "PDF",
+          "uploadedAt": "Just now",
+          "pages": 14,
+          "keyConceptsExtracted": [
+            "Core Theoretical Principles",
+            "Mathematical Models & Formulas",
+            "Real-World Applications",
+            "Review & Assessment Checkpoints"
+          ],
+          "status": "ready"
+        },
+        {
+          "id": "mat_1788427662200",
+          "name": "postman notes-1-10.pdf",
+          "size": "0.37 MB",
+          "type": "PDF",
+          "uploadedAt": "Just now",
+          "pages": 16,
+          "keyConceptsExtracted": [
+            "Core Theoretical Principles",
+            "Mathematical Models & Formulas",
+            "Real-World Applications",
+            "Review & Assessment Checkpoints"
+          ],
+          "status": "ready"
+        }
+      ],
+      "assessments": [],
+      "conceptMastery": [],
+      "learningPath": {
+        "id": "track_stem_foundations",
+        "title": "STEM & AI Foundations Roadmap",
+        "category": "STEM & Artificial Intelligence",
+        "description": "Structured pedagogical track progressing from fundamental circuit physics to modern neural networks and algorithmic architectures.",
+        "nodes": [
+          {
+            "id": "node_1",
+            "title": "Electricity & Circuit Theory (Ohm's Law)",
+            "status": "in_progress",
+            "estimatedHours": 2.5,
+            "description": "Voltage (V), Current (I), and Resistance (R). Physical analogies, Ohm’s Law calculations, and circuit diagrams.",
+            "subTopics": [
+              "Potential Difference",
+              "Current Flow",
+              "Resistance Factors",
+              "Circuit Simulations"
+            ]
+          },
+          {
+            "id": "node_2",
+            "title": "Classical Mechanics (Newton's Laws)",
+            "status": "locked",
+            "estimatedHours": 3,
+            "description": "Inertia, F=ma dynamics, action-reaction pairs, and free-body diagrams in real-world scenarios.",
+            "subTopics": [
+              "First Law & Inertia",
+              "Second Law Derivations",
+              "Third Law Pairs",
+              "Friction Models"
+            ]
+          },
+          {
+            "id": "node_3",
+            "title": "Python for Computational Science",
+            "status": "locked",
+            "estimatedHours": 4.5,
+            "description": "Syntax fundamentals, control flow, functions, and applying vectorized numerical computation to physics problems.",
+            "subTopics": [
+              "Variables & Types",
+              "Functions & Scope",
+              "Data Structures",
+              "Algorithmic Logic"
+            ]
+          },
+          {
+            "id": "node_4",
+            "title": "Neural Networks & Deep Learning Intuition",
+            "status": "locked",
+            "estimatedHours": 4,
+            "description": "From biological neurons to perceptrons, activation functions, forward propagation, and gradient descent.",
+            "subTopics": [
+              "Perceptron Model",
+              "Weights & Biases",
+              "Activation Functions",
+              "Loss Landscapes"
+            ]
+          },
+          {
+            "id": "node_5",
+            "title": "Transformer Architectures & Modern AI",
+            "status": "locked",
+            "estimatedHours": 5,
+            "description": "Attention mechanisms, tokenization, embeddings, and how large language models process human thought.",
+            "subTopics": [
+              "Self-Attention",
+              "Positional Encoding",
+              "Transformer Blocks",
+              "Inference Pipelines"
+            ]
+          }
+        ]
+      },
+      "learningHistory": [
+        {
+          "id": "mat_hist_1788427727877",
+          "lessonTitle": "postman notes-1-10.pdf",
+          "subject": "PDF",
+          "activityType": "material_uploaded",
+          "timestamp": "2026-09-03T09:28:47.877Z",
+          "date": "Today"
+        },
+        {
+          "id": "mat_hist_1788427665616",
+          "lessonTitle": "postman notes-1-10.pdf",
+          "subject": "PDF",
+          "activityType": "material_uploaded",
+          "timestamp": "2026-09-03T09:27:45.616Z",
+          "date": "Today"
+        }
+      ]
+    }
+  },
+  "sessions": {
+    "080c841d3c56f132388a523e6e0801adcb23725cbc6016f9cfd4a4775c7ce604": {
+      "userId": "usr_1788427579062_e338384d",
+      "createdAt": "2026-09-03T09:26:19.069Z"
+    }
+  }
+}
